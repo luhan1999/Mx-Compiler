@@ -1,10 +1,12 @@
 package Mx.Ast;
 
-public class VarDeclNode extends DeclNode{
+public class VarDeclNode extends DeclNode
+{
     private TypeNode type;
     private ExprNode init;
 
-    public VarDeclNode(TypeNode _type, String _name, ExprNode _init, Location _location) {
+    public VarDeclNode(TypeNode _type, String _name, ExprNode _init, Location _location)
+    {
         type = _type;
         name = _name;
         init = _init;
@@ -18,8 +20,9 @@ public class VarDeclNode extends DeclNode{
         return init;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

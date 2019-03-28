@@ -1,6 +1,7 @@
 package Mx.Type;
 
-public class Type {
+public class Type
+{
     public enum HyperTypes {
         VOID, INT, STRING, BOOL, CLASS, ARRAY, FUNCTION , NULL
     }

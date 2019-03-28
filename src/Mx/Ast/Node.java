@@ -7,5 +7,5 @@ abstract  public class Node {
 
     public Location location() {return location;}
 
-    //abstract public void accpet(ASTVisitor visitor);
+    abstract public void accept(AstVisitor visitor);
 }

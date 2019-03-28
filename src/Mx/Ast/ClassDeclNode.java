@@ -2,12 +2,13 @@ package Mx.Ast;
 
 import java.util.List;
 
-public class ClassDeclNode extends DeclNode {
-
+public class ClassDeclNode extends DeclNode
+{
     private List<VarDeclNode> varMember;
     private List<FuncDeclNode> funcMember;
 
-    public ClassDeclNode(String name, List<VarDeclNode> varMember, List<FuncDeclNode> funcMember, Location location) {
+    public ClassDeclNode(String name, List<VarDeclNode> varMember, List<FuncDeclNode> funcMember, Location location)
+    {
         this.name = name;
         this.varMember = varMember;
         this.funcMember = funcMember;
@@ -21,8 +22,9 @@ public class ClassDeclNode extends DeclNode {
         return funcMember;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

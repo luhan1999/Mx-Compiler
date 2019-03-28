@@ -1,9 +1,11 @@
 package Mx.Ast;
 
-public class IdentifierExprNode extends ExprNode {
+public class IdentifierExprNode extends ExprNode
+{
     private String identifier;
 
-    public IdentifierExprNode(String identifier, Location location) {
+    public IdentifierExprNode(String identifier, Location location)
+    {
         this.identifier = identifier;
         this.location = location;
     }
@@ -12,8 +14,9 @@ public class IdentifierExprNode extends ExprNode {
         return identifier;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

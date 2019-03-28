@@ -1,13 +1,11 @@
 package Mx.Compiler;
 
 
-import Mx.Ast.ProgramNode;
-
+import Mx.Ast.*;
+import Mx.frontend.*;
 import Mx.Parser.MxLexer;
 import Mx.Parser.MxParser;
 import Mx.Parser.SyntaxErrorListener;
-
-import Mx.frontend.ASTBuilder;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -18,12 +16,14 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 
-public class Compiler {
+public class Compiler
+{
     private  InputStream Fin;
     private  PrintStream Fout;
     private  ProgramNode Ast;
 
-    public Compiler(InputStream _fin, PrintStream _fout){
+    public Compiler(InputStream _fin, PrintStream _fout)
+    {
         Fin = _fin;
         Fout = _fout;
     }
@@ -42,15 +42,16 @@ public class Compiler {
 
     public void compile() throws Exception {
         System.out.println("compiler is running");
+
         buildAst();
-        //ASTPrinter astPrinter = new ASTPrinter(outS);
-        //astPrinter.visit(ast);
-//        GlobalScopePreScanner globalScopePreScanner = new GlobalScopePreScanner();
-//        globalScopePreScanner.visit(ast);
-//        ClassVarMemberScanner classVarMemberScanner = new ClassVarMemberScanner(globalScopePreScanner.getScope());
-//        classVarMemberScanner.visit(ast);
-//        FunctionScopeScanner functionScopeScanner = new FunctionScopeScanner(classVarMemberScanner.getGlobalScope());
-//        functionScopeScanner.visit(ast);
-//        System.out.println("compiler finished.");
+
+        GlobalScopePreScanner globalScopePreScanner = new GlobalScopePreScanner();
+        globalScopePreScanner.visit(Ast);
+        ClassVarMemberScanner classVarMemberScanner = new ClassVarMemberScanner(globalScopePreScanner.getScope());
+        classVarMemberScanner.visit(Ast);
+        FunctionScopeScanner functionScopeScanner = new FunctionScopeScanner(classVarMemberScanner.getGlobalScope());
+        functionScopeScanner.visit(Ast);
+
+        System.out.println("compiler finished.");
     }
 }

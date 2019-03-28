@@ -1,9 +1,11 @@
 package Mx.Type;
 
-public class ArrayType extends Type {
+public class ArrayType extends Type
+{
     private Type baseType;
 
-    public ArrayType(Type baseType) {
+    public ArrayType(Type baseType)
+    {
         this.hyperType = HyperTypes.ARRAY;
         this.baseType = baseType;
     }
@@ -13,7 +15,8 @@ public class ArrayType extends Type {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj)
+    {
         if (!(obj instanceof ArrayType)) return false;
         return baseType.equals(((ArrayType) obj).baseType);
     }

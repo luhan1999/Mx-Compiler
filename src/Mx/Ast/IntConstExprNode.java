@@ -1,9 +1,11 @@
 package Mx.Ast;
 
-public class IntConstExprNode extends ConstExprNode {
+public class IntConstExprNode extends ConstExprNode
+{
     private int value;
 
-    public IntConstExprNode(int value, Location location) {
+    public IntConstExprNode(int value, Location location)
+    {
         this.value = value;
         this.location = location;
     }
@@ -12,8 +14,9 @@ public class IntConstExprNode extends ConstExprNode {
         return value;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

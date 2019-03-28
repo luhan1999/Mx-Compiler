@@ -14,15 +14,18 @@ import java.util.List;
 
 public class ASTBuilder extends MxBaseVisitor<Node>{
 
-    private TypeNode typeForVarDecl;  //TODO
+    private TypeNode typeForVarDecl;  //identify the type
+
 
     @Override
-    public Node visitProgram(MxParser.ProgramContext ctx) {
+    public Node visitProgram(MxParser.ProgramContext ctx)
+    {
         List<DeclNode> decls = new ArrayList<>();
         if (ctx.programSection() != null)
         {
             for (ParserRuleContext programSection : ctx.programSection())
             {
+                //Attention: may be varList
                 Node decl = visit(programSection);
                 if (decl instanceof VarDeclListNode) decls.addAll(((VarDeclListNode) decl).getDecls());
                 else decls.add((DeclNode) decl);
@@ -31,6 +34,7 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
         return new ProgramNode(decls, Location.fromCtx(ctx));
     }
 
+    //programSection:   functionDeclaration|classDeclaration|variableDeclaration
     @Override
     public Node visitProgramSection(MxParser.ProgramSectionContext ctx){
         if (ctx.functionDeclaration() != null) return visit(ctx.functionDeclaration());
@@ -39,6 +43,7 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
         else throw new CompilerError(Location.fromCtx(ctx), "Invalid program section");
     }
 
+    //functionDeclaration:  typeORvoid? Identifier '(' parameterDeclList? ')' body
     @Override
     public Node visitFunctionDeclaration(MxParser.FunctionDeclarationContext ctx)
     {
@@ -48,19 +53,21 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
 
         String name = ctx.Identifier().getText();
         List<VarDeclNode> parameterList = new ArrayList<>();
-        Node paraDecl;
+        Node parameter;
         if (ctx.parameterDeclList() != null)
         {
             for (ParserRuleContext parameters:  ctx.parameterDeclList().parameter())
             {
-                paraDecl = visit(parameters);
-                parameterList.add((VarDeclNode) paraDecl);
+                parameter = visit(parameters);
+                parameterList.add((VarDeclNode) parameter);
             }
         }
         BlockStmtNode body = (BlockStmtNode) visit(ctx.body());
         return new FuncDeclNode(returnType, name, parameterList, body, Location.fromCtx(ctx));
     }
 
+    //classDeclaration:   Class Identifier '{' memberDecl* '}'
+    //memberDecl:   functionDeclaration | variableDeclaration;
     @Override
     public Node visitClassDeclaration(MxParser.ClassDeclarationContext ctx)
     {
@@ -80,7 +87,7 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
             }
         }
         return new ClassDeclNode(name, varMember, funcMember, Location.fromCtx(ctx));
-    };
+    }
 
     @Override
     public Node visitMemberDecl(MxParser.MemberDeclContext ctx)
@@ -108,6 +115,7 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
         return new VarDeclListNode(decls);
     }
 
+    //variable:   Identifier ('=' expression)?
     @Override
     public Node visitVariable(MxParser.VariableContext ctx)
     {
@@ -118,7 +126,7 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
         return new VarDeclNode(typeForVarDecl, name, init, Location.fromCtx(ctx));
     }
 
-    //will not use the node
+
     @Override
     public Node visitParameterDeclList(MxParser.ParameterDeclListContext ctx) { return super.visitParameterDeclList(ctx);}
 
@@ -127,7 +135,7 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
         TypeNode type = (TypeNode) visit(ctx.type());
         String name = ctx.Identifier().getText();
         return new VarDeclNode(type, name, null, Location.fromCtx(ctx));
-    };
+    }
 
     @Override
     public Node visitTypeORvoid(MxParser.TypeORvoidContext ctx)
@@ -156,6 +164,8 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
         else throw new CompilerError(location, "Invalid primitive type");
         return type;
     }
+
+    //nonArraytype:   Int|Bool|String|Identifier
 
     @Override
     public Node visitNonArraytype(MxParser.NonArraytypeContext ctx)
@@ -200,6 +210,9 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
     @Override
     public Node visitBlankStmt(MxParser.BlankStmtContext ctx) { return null;}
 
+    //body: '{' bodyStatement* '}'
+    //bodyStatement:statement|variableDeclaration
+    @Override
     public Node visitBody(MxParser.BodyContext ctx)
     {
         List<Node> stmtandvarlist = new ArrayList<>();
@@ -311,6 +324,7 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
         return visit(ctx.primaryExpression());
     }
 
+    // attention arr may be class.function()
     @Override
     public Node visitSubscriptExpr(MxParser.SubscriptExprContext ctx)
     {
@@ -375,11 +389,10 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
     {
         ExprNode func = (ExprNode) visit(ctx.expression());
         List<ExprNode> args = new ArrayList<>();
-        if (ctx.parameterList() != null) {
-            for (ParserRuleContext parameter : ctx.parameterList().expression()) {
+        if (ctx.parameterList() != null)
+            for (ParserRuleContext parameter : ctx.parameterList().expression())
                 args.add((ExprNode) visit(parameter));
-            }
-        }
+
         return new FuncCallExprNode(func, args, Location.fromCtx(ctx));
     }
 
@@ -451,17 +464,18 @@ public class ASTBuilder extends MxBaseVisitor<Node>{
 
     @Override
     public Node visitErrorCreator(MxParser.ErrorCreatorContext ctx){
-        throw new SemanticError(Location.fromCtx(ctx), "Invalid creator for new expression");
+        throw new SemanticError(Location.fromCtx(ctx), "Invalid creator");
     }
 
-    //TODO
+    //nonArraytype ('[' expression ']')+ ('[' ']')*   #arrayCreator
     @Override
     public Node visitArrayCreator(MxParser.ArrayCreatorContext ctx){
         TypeNode newType = (TypeNode) visit(ctx.nonArraytype());
         List<ExprNode> dims = new ArrayList<>();
-        for (ParserRuleContext dim : ctx.expression()) {
+
+        for (ParserRuleContext dim : ctx.expression())
             dims.add((ExprNode) visit(dim));
-        }
+
         int numDim = (ctx.getChildCount() - 1 - dims.size()) / 2;
         for (int i = 0; i < numDim; ++i) newType.setType(new ArrayType(newType.getType()));
         return new NewExprNode(newType, dims, numDim, Location.fromCtx(ctx));

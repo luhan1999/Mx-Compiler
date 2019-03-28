@@ -1,6 +1,7 @@
 package Mx.Ast;
 
-public class CondStmtNode extends StmtNode {
+public class CondStmtNode extends StmtNode
+{
     private ExprNode cond;
     private StmtNode thenStmt, elseStmt;
 
@@ -19,8 +20,9 @@ public class CondStmtNode extends StmtNode {
     }
     public StmtNode getElseStmt() { return elseStmt; }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

@@ -1,6 +1,7 @@
 package Mx.Ast;
 
-public class SuffixExprNode extends ExprNode {
+public class SuffixExprNode extends ExprNode
+{
     public enum SuffixOps {
         SUFFIX_INC, SUFFIX_DEC
     }
@@ -8,7 +9,8 @@ public class SuffixExprNode extends ExprNode {
     private SuffixOps op;
     private ExprNode expr;
 
-    public SuffixExprNode(SuffixOps _op, ExprNode _expr, Location _location) {
+    public SuffixExprNode(SuffixOps _op, ExprNode _expr, Location _location)
+    {
         op = _op;
         expr = _expr;
         location = _location;
@@ -21,8 +23,9 @@ public class SuffixExprNode extends ExprNode {
         return expr;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

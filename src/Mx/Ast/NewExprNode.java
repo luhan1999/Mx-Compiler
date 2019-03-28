@@ -7,7 +7,8 @@ public class NewExprNode extends ExprNode {
     private List<ExprNode> dims;
     private int numDim;
 
-    public NewExprNode(TypeNode _newType, List<ExprNode> _dims, int _numDim, Location _location) {
+    public NewExprNode(TypeNode _newType, List<ExprNode> _dims, int _numDim, Location _location)
+    {
         newType = _newType;
         dims = _dims;
         numDim = _numDim;
@@ -24,8 +25,9 @@ public class NewExprNode extends ExprNode {
         return numDim;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

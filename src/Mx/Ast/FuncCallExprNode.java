@@ -2,11 +2,13 @@ package Mx.Ast;
 
 import java.util.List;
 
-public class FuncCallExprNode extends ExprNode {
+public class FuncCallExprNode extends ExprNode
+{
     private ExprNode func;
     private List<ExprNode> args;
 
-    public FuncCallExprNode(ExprNode _func, List<ExprNode> _args, Location _location) {
+    public FuncCallExprNode(ExprNode _func, List<ExprNode> _args, Location _location)
+    {
         func = _func;
         args = _args;
         location = _location;
@@ -19,8 +21,9 @@ public class FuncCallExprNode extends ExprNode {
         return args;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

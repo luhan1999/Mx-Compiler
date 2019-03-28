@@ -2,7 +2,8 @@ package Mx.Ast;
 
 import Mx.Type.Type;
 
-public class TypeNode extends Node{
+public class TypeNode extends Node
+{
     private Type type;
 
     public TypeNode(Type _type, Location _location){
@@ -13,8 +14,9 @@ public class TypeNode extends Node{
     public void setType(Type type) {this.type = type;}
     public Type getType() {return type;}
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

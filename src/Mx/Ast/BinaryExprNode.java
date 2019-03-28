@@ -1,6 +1,7 @@
 package Mx.Ast;
 
-public class BinaryExprNode extends ExprNode {
+public class BinaryExprNode extends ExprNode
+{
     public enum BinaryOps {
         MUL, DIV, MOD,
         ADD, SUB, SHL, SHR,
@@ -11,7 +12,8 @@ public class BinaryExprNode extends ExprNode {
     private BinaryOps op;
     private ExprNode lhs, rhs;
 
-    public BinaryExprNode(BinaryOps op, ExprNode lhs, ExprNode rhs, Location location) {
+    public BinaryExprNode(BinaryOps op, ExprNode lhs, ExprNode rhs, Location location)
+    {
         this.op = op;
         this.lhs = lhs;
         this.rhs = rhs;
@@ -28,8 +30,9 @@ public class BinaryExprNode extends ExprNode {
         return op;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

@@ -1,10 +1,12 @@
 package Mx.Ast;
 
-public class WhileStmtNode extends LoopStmtNode {
+public class WhileStmtNode extends LoopStmtNode
+{
     private ExprNode cond;
     private StmtNode stmt;
 
-    public WhileStmtNode(ExprNode cond, StmtNode stmt, Location location) {
+    public WhileStmtNode(ExprNode cond, StmtNode stmt, Location location)
+    {
         this.cond = cond;
         this.stmt = stmt;
         this.location = location;
@@ -17,8 +19,9 @@ public class WhileStmtNode extends LoopStmtNode {
         return stmt;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

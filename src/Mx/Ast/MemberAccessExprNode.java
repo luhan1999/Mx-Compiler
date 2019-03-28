@@ -1,10 +1,12 @@
 package Mx.Ast;
 
-public class MemberAccessExprNode extends ExprNode {
+public class MemberAccessExprNode extends ExprNode
+{
     private ExprNode expr;
     private String member;
 
-    public MemberAccessExprNode(ExprNode _expr, String _member, Location _location) {
+    public MemberAccessExprNode(ExprNode _expr, String _member, Location _location)
+    {
         expr = _expr;
         member = _member;
         location = _location;
@@ -17,9 +19,10 @@ public class MemberAccessExprNode extends ExprNode {
         return member;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }
 

@@ -2,10 +2,12 @@ package Mx.Ast;
 
 import java.util.List;
 
-public class VarDeclListNode extends Node {
+public class VarDeclListNode extends Node
+{
     private List<VarDeclNode> decls;
 
-    public VarDeclListNode(List<VarDeclNode> decls) {
+    public VarDeclListNode(List<VarDeclNode> decls)
+    {
         this.decls = decls;
         this.location = null;
     }
@@ -14,8 +16,9 @@ public class VarDeclListNode extends Node {
         return decls;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

@@ -1,4 +1,143 @@
 package Mx.scope;
 
+import Mx.ErrorThrow.*;
+import Mx.Ast.Location;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Scope {
+    static private final String KEY_PREFIX = "$";
+    static private final String VAR_PREFIX = "$VAR$";
+    static private final String CLASS_PREFIX = "$CLASS$";
+    static private final String FUNC_PREFIX = "$FUNC$";
+    static public final String ARRAY_CLASS_NAME = "#ARRAY";
+    static public final String STRING_CLASS_NAME = "#STRING";
+    static public final String THIS_PARA_NAME = "#THIS";
+
+    private Map<String, Entity> entityMap = new HashMap<>();
+    private Scope parent;
+    private boolean isTop,isClassScope;
+
+    public Scope() {this.isTop = true; isClassScope = false;}
+    public Scope(Scope parent, boolean isClassScope)
+    {
+        this.isTop = false;
+        this.parent = parent;
+        this.isClassScope = isClassScope;
+    }
+
+    static public String varKey(String name) {
+        return VAR_PREFIX + name;
+    }
+    static public String classKey(String name) {
+        return CLASS_PREFIX + name;
+    }
+    static public String funcKey(String name) { return FUNC_PREFIX + name; }
+
+    public Entity selfGet(String key) {
+        return entityMap.get(key);
+    }
+
+    public Entity get(String key)
+    {
+        Entity entity = entityMap.get(key);
+        if (isTop || entity != null) return entity;
+        else return parent.get(key);
+    }
+
+    public void put(String key, Entity entity)
+    {
+        if (!key.startsWith(KEY_PREFIX)) throw new CompilerError(String.format("Scope entity key Error"));
+        if (selfContainsKey(key)) throw new SemanticError(String.format("Symbol is already defined"));
+        entityMap.put(key, entity);
+    }
+
+    public void putCheck(String name, String key, Entity entity) { put(key, entity); }
+    public void putCheck(Location location, String name, String key, Entity entity) { put(key, entity); }
+
+
+    public Entity getCheck(String name, String key)
+    {
+        Entity entity = get(key);
+        if (entity == null) throw new SemanticError(String.format("Entity \"%s\" with key \"%s\" not found in scope", name, key));
+        return entity;
+    }
+
+    public Entity getCheck(Location location, String name, String key)
+    {
+        Entity entity = get(key);
+        if (entity == null) throw new SemanticError(location, String.format("Entity \"%s\" not found in scope", name));
+        return entity;
+    }
+
+    public Entity selfGetCheck(String name, String key)
+    {
+        Entity entity = selfGet(key);
+        if (entity == null) throw new SemanticError(String.format("Entity \"%s\"  not found in scope itself", name));
+        return entity;
+    }
+
+    public Entity selfGetCheck(Location location, String name, String key) {
+        Entity entity = selfGet(key);
+        if (entity == null) throw new SemanticError(location, String.format("Entity \"%s\" not found in scope itself", name));
+        return entity;
+    }
+
+    public Entity getVarFuncCheck(Location location, String name)
+    {
+        Entity entity;
+        if (selfContainsExactKey(varKey(name))) entity = selfGet(varKey(name));
+        else if (selfContainsExactKey(funcKey(name))) entity = selfGet(funcKey(name));
+        else if (!isTop) entity = parent.getVarFuncCheck(location, name);
+        else entity = null;
+        if (entity == null) throw new SemanticError(location, String.format("Entity \"%s\" not found in scope", name));
+        return entity;
+    }
+
+    public void assertContainsExactKey(Location location, String name, String key)
+    {
+        if (!containsExactKey(key))
+            throw new SemanticError(location, String.format("Entity \"%s\" with key \"%s\" not found in scope", name, key));
+    }
+
+    private boolean selfContainsKey(String key)
+    {
+        String name;
+        if (key.startsWith(VAR_PREFIX)) {
+            name = key.substring(5);
+            return entityMap.containsKey(VAR_PREFIX + name) || entityMap.containsKey(FUNC_PREFIX + name);
+        }
+        else if (key.startsWith(CLASS_PREFIX)) {
+            name = key.substring(7);
+            return entityMap.containsKey(CLASS_PREFIX + name) || entityMap.containsKey(FUNC_PREFIX + name);
+        }
+        else if (key.startsWith(FUNC_PREFIX)) {
+            name = key.substring(6);
+            return entityMap.containsKey(FUNC_PREFIX + name) || entityMap.containsKey(VAR_PREFIX + name) || entityMap.containsKey(CLASS_PREFIX + name);
+        }
+        else return false;
+    }
+
+    public boolean containsKey(String key)
+    {
+        Boolean found = selfContainsKey(key);
+        if (!isTop && !found) return parent.containsKey(key);
+        return found;
+    }
+
+    public boolean selfContainsExactKey(String key)
+    {
+        return entityMap.containsKey(key);
+    }
+
+    public boolean containsExactKey(String key)
+    {
+        Boolean found = selfContainsExactKey(key);
+        if (!isTop && !found) return parent.containsExactKey(key);
+        return found;
+    }
+
+    public Scope getParent() {
+        return parent;
+    }
 }

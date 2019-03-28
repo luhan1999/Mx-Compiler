@@ -1,6 +1,7 @@
 package Mx.Ast;
 import Mx.Type.Type;
-abstract public class ExprNode extends Node {
+abstract public class ExprNode extends Node
+{
     private Type type;
     private boolean isLeftValue;
 

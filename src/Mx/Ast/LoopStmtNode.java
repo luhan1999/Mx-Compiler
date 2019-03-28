@@ -1,4 +1,3 @@
 package Mx.Ast;
 
-abstract public class LoopStmtNode extends StmtNode {
-}
+abstract public class LoopStmtNode extends StmtNode { }

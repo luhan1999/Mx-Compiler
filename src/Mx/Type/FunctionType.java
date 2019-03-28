@@ -1,9 +1,11 @@
 package Mx.Type;
 
-public class FunctionType extends Type {
+public class FunctionType extends Type
+{
     private String name;
 
-    public FunctionType(String name) {
+    public FunctionType(String name)
+    {
         hyperType = HyperTypes.FUNCTION;
         this.name = name;
     }
@@ -13,7 +15,8 @@ public class FunctionType extends Type {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj)
+    {
         if (!(obj instanceof FunctionType)) return false;
         return name.equals(((FunctionType) obj).name);
     }

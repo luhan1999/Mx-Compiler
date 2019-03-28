@@ -1,9 +1,11 @@
 package Mx.Ast;
 
-public class AssignExprNode extends ExprNode {
+public class AssignExprNode extends ExprNode
+{
     private ExprNode lhs, rhs;
 
-    public AssignExprNode(ExprNode lhs, ExprNode rhs, Location location) {
+    public AssignExprNode(ExprNode lhs, ExprNode rhs, Location location)
+    {
         this.lhs = lhs;
         this.rhs = rhs;
         this.location = location;
@@ -16,8 +18,9 @@ public class AssignExprNode extends ExprNode {
         return rhs;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }

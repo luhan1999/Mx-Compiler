@@ -1,9 +1,11 @@
 package Mx.Type;
 
-public class ClassType extends Type {
+public class ClassType extends Type
+{
     private String name;
 
-    public ClassType(String name) {
+    public ClassType(String name)
+    {
         this.hyperType = HyperTypes.CLASS;
         this.name = name;
     }
@@ -13,7 +15,8 @@ public class ClassType extends Type {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj)
+    {
         if (!(obj instanceof ClassType)) return false;
         return name.equals(((ClassType) obj).name);
     }

@@ -3,15 +3,18 @@ package Mx.Ast;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
-public class Location {
+public class Location
+{
     private final int line, column;
 
-    public Location(int line, int column){
+    public Location(int line, int column)
+    {
         this.line = line;
         this.column = column;
     }
 
-    public Location(Token token){
+    public Location(Token token)
+    {
         this.line = token.getLine();
         this.column = token.getCharPositionInLine();
     }

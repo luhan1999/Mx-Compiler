@@ -1,6 +1,7 @@
 package Mx.Ast;
 
-public class PrefixExprNode extends ExprNode {
+public class PrefixExprNode extends ExprNode
+{
     public enum PrefixOps {
         PREFIX_INC, PREFIX_DEC, POS, NEG, LOGIC_NOT, BITWISE_NOT
     }
@@ -8,7 +9,8 @@ public class PrefixExprNode extends ExprNode {
     private PrefixOps op;
     private ExprNode expr;
 
-    public PrefixExprNode(PrefixOps _op, ExprNode _expr, Location _location) {
+    public PrefixExprNode(PrefixOps _op, ExprNode _expr, Location _location)
+    {
         op = _op;
         expr = _expr;
         location = _location;
@@ -21,8 +23,9 @@ public class PrefixExprNode extends ExprNode {
         return expr;
     }
 
-//    @Override
-//    public void accept(ASTVisitor visitor) {
-//        visitor.visit(this);
-//    }
+    @Override
+    public void accept(AstVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }
