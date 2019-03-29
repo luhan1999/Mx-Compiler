@@ -3,8 +3,4 @@
 # don't print anything other to stdout.
 # if you would like to print some debug information, please go to stderr.
 
-set -e
-cd "$(dirname "$0")"
-export CCHK="java -classpath ./lib/antlr-4.7.2-complete.jar:./bin Mx.Main"
-cat > program.txt   # save everything in stdin to program.txt
-$CCHK
+java -Dfile.encoding=UTF-8 -classpath bin:lib/antlr-4.7.2-complete.jar Mx.Main
