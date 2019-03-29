@@ -53,7 +53,7 @@ nonArraytype
     :   Int
     |   Bool
     |   String
-    |   Identifier
+    |   Identifier ('(' ')')?
     ;
 
 // -------Statement-------

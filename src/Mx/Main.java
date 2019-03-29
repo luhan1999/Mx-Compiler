@@ -7,7 +7,7 @@ public class Main
 {
     public static void main(String arg[])throws Exception
     {
-        String fin = null;
+        String fin = "F:\\LhCompiler\\src\\Mx\\atest.txt";
         String fout = null;
 
         InputStream inS;

@@ -1,11 +1,23 @@
-int main(){
-  println("hi");
-  return 0;
+class A {
+  B t;
+  A() {
+    t = new B();
+  }
 }
+
+class B {
+  A t;
+
+}
+
+int main() {
+  
+}
+
 
 /*!! metadata:
 === comment ===
-zky
+金之涵 516030910578-Zhihan Jin
 === is_public ===
 True
 === assert ===
