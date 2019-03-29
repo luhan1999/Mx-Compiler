@@ -14,19 +14,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Mx/frontend/FunctionScopeScanner.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10788">
-              <caret line="382" selection-start-line="382" selection-end-line="382" />
-              <folding>
-                <element signature="e#4067#4068#0" expanded="true" />
-                <element signature="e#4110#4111#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Mx/scope/Scope.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3567">
@@ -58,8 +45,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="725">
-              <caret line="26" column="9" lean-forward="true" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+            <state relative-caret-position="232">
+              <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Mx/atest.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="696">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
             </state>
           </provider>
         </entry>
@@ -68,7 +64,7 @@
         <entry file="file://$PROJECT_DIR$/src/Mx/Ast/AstVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="435">
-              <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+              <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -158,7 +154,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Mx/scope/ClassEntity.java" />
         <option value="$PROJECT_DIR$/src/Mx/Ast/BoolConstExprNode.java" />
         <option value="$PROJECT_DIR$/src/Mx/Ast/BlockStmtNode.java" />
         <option value="$PROJECT_DIR$/src/Mx/Ast/BinaryExprNode.java" />
@@ -208,6 +203,7 @@
         <option value="$PROJECT_DIR$/src/Mx/frontend/GlobalScopePreScanner.java" />
         <option value="$PROJECT_DIR$/src/Mx/frontend/ClassVarMemberScanner.java" />
         <option value="$PROJECT_DIR$/src/Mx/frontend/FunctionScopeScanner.java" />
+        <option value="$PROJECT_DIR$/src/Mx/atest.txt" />
         <option value="$PROJECT_DIR$/src/Mx/Main.java" />
       </list>
     </option>
@@ -226,6 +222,45 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="LhCompiler" type="58d84e3e:PackageViewProjectNode" />
+              <item name="LhCompiler" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="LhCompiler" type="58d84e3e:PackageViewProjectNode" />
+              <item name="LhCompiler" type="616d4139:PackageViewModuleNode" />
+              <item name="Mx.Parser" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+            </path>
+            <path>
+              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Mx" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Course" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -246,85 +281,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-            </path>
-            <path>
-              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="lib" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Mx" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Mx" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Ast" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Mx" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Compiler" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Mx" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="ErrorThrow" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Mx" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="frontend" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="LhCompiler" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="LhCompiler" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Mx" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Parser" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Course" />
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="LhCompiler" type="58d84e3e:PackageViewProjectNode" />
-              <item name="LhCompiler" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="LhCompiler" type="58d84e3e:PackageViewProjectNode" />
-              <item name="LhCompiler" type="616d4139:PackageViewModuleNode" />
-              <item name="Mx.Parser" type="1f31426a:PackageElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -333,7 +289,7 @@
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/gen-visitor" value="true" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/output-dir" value="F:\LhCompiler\src" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/package" value="Mx.Parser" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553806226304" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553832135108" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -414,7 +370,7 @@
     <frame x="-50" y="34" width="1936" height="1041" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22639485" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22961374" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -423,7 +379,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32942432" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.31257078" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31257078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997773" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -451,13 +407,6 @@
     </ignored-roots>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Mx/Ast/MemberAccessExprNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/Ast/NewExprNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="268">
@@ -906,6 +855,13 @@
     <entry file="file://$PROJECT_DIR$/src/Mx/Parser/Mx.interp">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mx/Ast/AstVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/frontend/GlobalScopePreScanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1856">
@@ -956,17 +912,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/Ast/AstVisitor.java">
+    <entry file="file://$PROJECT_DIR$/src/Mx/atest.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+        <state relative-caret-position="696">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="725">
-          <caret line="26" column="9" lean-forward="true" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+        <state relative-caret-position="232">
+          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
         </state>
       </provider>
     </entry>
