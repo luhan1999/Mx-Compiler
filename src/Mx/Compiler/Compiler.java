@@ -22,10 +22,10 @@ public class Compiler
     private  PrintStream Fout;
     private  ProgramNode Ast;
 
-    public Compiler(InputStream _fin, PrintStream _fout)
+    public Compiler(InputStream fin, PrintStream fout)
     {
-        Fin = _fin;
-        Fout = _fout;
+        Fin = fin;
+        Fout = fout;
     }
 
     private void buildAst() throws Exception{
@@ -51,6 +51,11 @@ public class Compiler
         classVarMemberScanner.visit(Ast);
         FunctionScopeScanner functionScopeScanner = new FunctionScopeScanner(classVarMemberScanner.getGlobalScope());
         functionScopeScanner.visit(Ast);
+
+        new StaticUsagePreScanner(globalScopePreScanner.getScope()).visit(Ast);
+
+//        IRBuilder irBuilder = new IRBuilder(globalScopePreScanner.getScope());
+//        irBuilder.visit(Ast);
 
         System.out.println("compiler finished.");
     }

@@ -1,5 +1,7 @@
 package Mx.Type;
 
+import Mx.Configuration;
+
 public class ArrayType extends Type
 {
     private Type baseType;
@@ -8,6 +10,7 @@ public class ArrayType extends Type
     {
         this.hyperType = HyperTypes.ARRAY;
         this.baseType = baseType;
+        varSize = Configuration.getRegSize();
     }
 
     public Type getBaseType() {

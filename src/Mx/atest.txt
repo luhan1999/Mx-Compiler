@@ -1,36 +1,8 @@
-class A {
-  B t;
-  A() {
-    t = new B();
-  }
+﻿int main(){
+int a;
+int c;
+	for(a = 0 ; a < 100 ; ++a){
+		int b = 0;
+		c = 9;
 }
-
-class B {
-  A t;
-
 }
-
-int main() {
-
-}
-
-
-/*!! metadata:
-=== comment ===
-金之涵 516030910578-Zhihan Jin
-=== is_public ===
-True
-=== assert ===
-success_compile
-=== timeout ===
-0
-=== input ===
-
-=== phase ===
-semantic pretest
-=== output ===
-
-=== exitcode ===
-0
-
-!!*/

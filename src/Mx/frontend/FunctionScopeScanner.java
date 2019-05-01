@@ -46,6 +46,7 @@ public class FunctionScopeScanner extends BaseScopeScanner {
         }
         checkVarDeclInit(node);
         VarEntity entity = new VarEntity(node.getName(), node.getType().getType());
+        if (currentScope == globalScope) entity.setGlobal(true);
         currentScope.putCheck(node.location(), node.getName(), Scope.varKey(node.getName()), entity);
     }
 
@@ -214,8 +215,10 @@ public class FunctionScopeScanner extends BaseScopeScanner {
         if (!(node.getFunc().getType() instanceof FunctionType))
             throw new SemanticError(node.getFunc().location(), String.format("Type \"%s\" is not callable", node.getFunc().getType().toString()));
         FuncEntity funcEntity = currentFuncEntity;
+        node.setFuncEntity(funcEntity);
         int paraNum = funcEntity.getParameters().size();
-        if (paraNum != node.getArgs().size())
+        int firstParaIdx = funcEntity.isMember() ? 1 : 0;
+        if (paraNum - firstParaIdx!= node.getArgs().size())
             throw new SemanticError(node.location(), String.format("Lack parameter"));
 
         boolean invalidArgType;
@@ -305,6 +308,17 @@ public class FunctionScopeScanner extends BaseScopeScanner {
 
     @Override
     public void visit(NewExprNode node) {
+
+        //new add
+        if (node.getDims() != null) {
+            for (ExprNode dim : node.getDims()) {
+                dim.accept(this);
+                if (!(dim.getType() instanceof IntType)) {
+                    throw new SemanticError(dim.location(), "dimension size of array should be integer type");
+                }
+            }
+        }
+        //
         node.setType(node.getNewType().getType());
         node.setLeftValue(false);
     }
@@ -407,6 +421,7 @@ public class FunctionScopeScanner extends BaseScopeScanner {
         String name = node.getIdentifier();
         Entity entity = currentScope.getVarFuncCheck(node.location(), name);
         if (entity instanceof VarEntity) {
+            node.setVarEntity((VarEntity) entity);
             node.setLeftValue(true);
         }
         else if (entity instanceof FuncEntity) {

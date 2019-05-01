@@ -1,11 +1,14 @@
 package Mx.Ast;
 
+import Mx.scope.FuncEntity;
+
 import java.util.List;
 
 public class FuncCallExprNode extends ExprNode
 {
     private ExprNode func;
     private List<ExprNode> args;
+    private FuncEntity funcEntity;
 
     public FuncCallExprNode(ExprNode _func, List<ExprNode> _args, Location _location)
     {
@@ -19,6 +22,13 @@ public class FuncCallExprNode extends ExprNode
     }
     public List<ExprNode> getArgs() {
         return args;
+    }
+
+    public FuncEntity getFuncEntity() {
+        return funcEntity;
+    }
+    public void setFuncEntity(FuncEntity funcEntity) {
+        this.funcEntity = funcEntity;
     }
 
     @Override

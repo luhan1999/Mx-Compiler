@@ -1,5 +1,7 @@
 package Mx.Type;
 
+import Mx.Configuration;
+
 public class ClassType extends Type
 {
     private String name;
@@ -8,6 +10,7 @@ public class ClassType extends Type
     {
         this.hyperType = HyperTypes.CLASS;
         this.name = name;
+        varSize = Configuration.getRegSize();
     }
 
     public String getName() {

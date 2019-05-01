@@ -34,6 +34,10 @@ public class Scope {
     }
     static public String funcKey(String name) { return FUNC_PREFIX + name; }
 
+    public boolean isTop() {
+        return isTop;
+    }
+
     public Entity selfGet(String key) {
         return entityMap.get(key);
     }

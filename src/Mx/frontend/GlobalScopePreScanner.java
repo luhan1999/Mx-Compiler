@@ -19,6 +19,10 @@ public class GlobalScopePreScanner extends BaseScopeScanner {
     private void Build(Scope thisScope, String name, List<VarEntity> parameters, Type returnType) {
         String key = Scope.funcKey(name);
         FuncEntity entity = new FuncEntity(name, new FunctionType(name),parameters,returnType);
+        entity.setBuiltIn(true);
+        if (!thisScope.isTop()) {
+            entity.setMember(true);
+        }
         thisScope.putCheck(name, key, entity);
     }
 

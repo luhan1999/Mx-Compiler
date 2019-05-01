@@ -1,0 +1,114 @@
+package Mx.ir;
+
+
+import Mx.Ast.BlockStmtNode;
+import Mx.Ast.StmtNode;
+import Mx.ErrorThrow.CompilerError;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class BasicBlock {
+    private IRInstruction firstInst = null, lastInst = null;
+    private IRFunction func;
+    private String name;
+    private boolean hasJumpInst = false;
+    private int postOrderIdx, preOrderIdx;
+    private Set<BasicBlock> prevBBset = new HashSet<>(), nextBBset = new HashSet<>();
+    public StmtNode forNode = null;
+
+    public BasicBlock(IRFunction func, String name){
+        this.func = func;
+        this.name = name;
+    }
+
+    public void addInst(IRInstruction inst){
+        if (hasJumpInst){
+            throw new CompilerError("Finished Basic Block has JumpInst already");
+        }
+        if (firstInst == null){
+            firstInst = lastInst = inst;
+        } else {
+            lastInst.linkNextInst(inst);
+            lastInst = inst;
+        }
+    }
+
+    public String getName() { return name; }
+
+    //TOthink: why differ from prev and next
+    public void addPrevBB(BasicBlock bb) { prevBBset.add(bb); }
+    public void addNextBB(BasicBlock bb) {
+        nextBBset.add(bb);
+        if (bb != null) { bb.addPrevBB(this); }
+    }
+
+    public void delPrevBB(BasicBlock bb) { prevBBset.remove(bb); }
+    public void delNextBB(BasicBlock bb) {
+        nextBBset.remove(bb);
+        if (bb != null){
+            bb.delPrevBB(this);
+        }
+    }
+
+    public void setJumpInst(IRJumpInstruction jumpInst) {
+        addInst(jumpInst);
+        hasJumpInst = true;
+        if (jumpInst instanceof IRBranch){
+            addNextBB(((IRBranch) jumpInst).getThenBB());
+            addNextBB(((IRBranch) jumpInst).getElseBB());
+        } else if (jumpInst instanceof IRJump) {
+            addNextBB(((IRJump) jumpInst).getTargetBB());
+        } else if (jumpInst instanceof IRReturn) {
+            func.getRetInstList().add((IRReturn) jumpInst);
+        } else {
+            throw new CompilerError("invalid type of IRJumpInstruction");
+        }
+    }
+
+    public void reInit() {
+        firstInst = null;
+        lastInst = null;
+        hasJumpInst = false;
+    }
+
+    public void removeJumpInst() {
+        hasJumpInst = false;
+        if (lastInst instanceof IRBranch) {
+            delNextBB(((IRBranch) lastInst).getThenBB());
+            delNextBB(((IRBranch) lastInst).getElseBB());
+        } else if (lastInst instanceof IRJump) {
+            delNextBB(((IRJump) lastInst).getTargetBB());
+        } else if (lastInst instanceof IRReturn) {
+            func.getRetInstList().remove((IRReturn) lastInst);
+        } else {
+            throw new CompilerError("invalid type of IRJumpInstruction");
+        }
+    }
+
+    public boolean isHasJumpInst() { return hasJumpInst; }
+
+    public Set<BasicBlock> getPrevBBSet() { return prevBBset; }
+
+    public Set<BasicBlock> getNextBBSet() { return nextBBset; }
+
+    public void setPostOrderIdx(int postOrderIdx) { this.postOrderIdx = postOrderIdx; }
+
+    public void setPreOrderIdx(int preOrderIdx) { this.preOrderIdx = preOrderIdx; }
+
+    public int getPostOrderIdx() { return postOrderIdx; }
+
+    public IRInstruction getFirstInst() { return firstInst; }
+
+    public IRInstruction getLastInst() { return lastInst; }
+
+    public void setFirstInst(IRInstruction firstInst) { this.firstInst = firstInst; }
+
+    public void setLastInst(IRInstruction lastInst) { this.lastInst = lastInst; }
+
+    public IRFunction getFunc() { return func;}
+
+    public void accept(IRVisitor visitor) { visitor.visit(this);}
+
+
+}
