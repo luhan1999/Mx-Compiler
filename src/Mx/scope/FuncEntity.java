@@ -43,7 +43,7 @@ public class FuncEntity extends Entity {
     {
         super(node.getName(), new FunctionType(node.getName()));
         parameters = new ArrayList<>();
-        parameters.add(new VarEntity(Scope.THIS_PARA_NAME, new ClassType(className))); //To Think why to add this line
+//        parameters.add(new VarEntity(Scope.THIS_PARA_NAME, new ClassType(className))); //To Think why to add this line
         for (VarDeclNode paraDecl : node.getParameterList())
         {
             parameters.add(new VarEntity(paraDecl));
