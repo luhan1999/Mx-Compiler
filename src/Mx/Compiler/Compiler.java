@@ -52,8 +52,8 @@ public class Compiler
         FunctionScopeScanner functionScopeScanner = new FunctionScopeScanner(classVarMemberScanner.getGlobalScope());
         functionScopeScanner.visit(Ast);
 
-        new StaticUsagePreScanner(globalScopePreScanner.getScope()).visit(Ast);
-
+//        new StaticUsagePreScanner(globalScopePreScanner.getScope()).visit(Ast);
+//
 //        IRBuilder irBuilder = new IRBuilder(globalScopePreScanner.getScope());
 //        irBuilder.visit(Ast);
 
