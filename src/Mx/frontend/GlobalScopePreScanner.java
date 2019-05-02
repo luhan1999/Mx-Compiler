@@ -38,17 +38,17 @@ public class GlobalScopePreScanner extends BaseScopeScanner {
 
         // ------ Class String build -------
         String stringKey = Scope.classKey(Scope.STRING_CLASS_NAME);
-        ClassEntity stringEntity = new ClassEntity("string", new ClassType(Scope.STRING_CLASS_NAME), scope);
-        Build(stringEntity.getScope(), "length", new ArrayList<>(), IntType.getInstance());
-        Build(stringEntity.getScope(), "substring", Arrays.asList(new VarEntity("left", IntType.getInstance()), new VarEntity("right", IntType.getInstance())), StringType.getInstance());
-        Build(stringEntity.getScope(), "parseInt", new ArrayList<>(), IntType.getInstance());
-        Build(stringEntity.getScope(), "ord", Arrays.asList(new VarEntity("pos", IntType.getInstance())), IntType.getInstance());
+        ClassEntity stringEntity = new ClassEntity(Scope.STRING_CLASS_NAME, new ClassType(Scope.STRING_CLASS_NAME), scope);
+        Build(stringEntity.getScope(), "length", Arrays.asList(new VarEntity(Scope.THIS_PARA_NAME, StringType.getInstance())), IntType.getInstance());
+        Build(stringEntity.getScope(), "substring", Arrays.asList(new VarEntity(Scope.THIS_PARA_NAME, StringType.getInstance()), new VarEntity("left", IntType.getInstance()), new VarEntity("right", IntType.getInstance())), StringType.getInstance());
+        Build(stringEntity.getScope(), "parseInt", Arrays.asList(new VarEntity(Scope.THIS_PARA_NAME, StringType.getInstance())), IntType.getInstance());
+        Build(stringEntity.getScope(), "ord", Arrays.asList(new VarEntity(Scope.THIS_PARA_NAME, StringType.getInstance()), new VarEntity("pos", IntType.getInstance())), IntType.getInstance());
         scope.putCheck(Scope.STRING_CLASS_NAME, stringKey, stringEntity);
 
         // ------ Class Array build -------
         String arrayKey = Scope.classKey(Scope.ARRAY_CLASS_NAME);
-        ClassEntity arrayEntity = new ClassEntity("string", new ClassType(Scope.ARRAY_CLASS_NAME), scope);
-        Build(arrayEntity.getScope(), "size", new ArrayList<>(), IntType.getInstance());
+        ClassEntity arrayEntity = new ClassEntity(Scope.ARRAY_CLASS_NAME, new ClassType(Scope.ARRAY_CLASS_NAME), scope);
+        Build(arrayEntity.getScope(), "size", Arrays.asList(new VarEntity(Scope.THIS_PARA_NAME, new ArrayType(null))), IntType.getInstance());
         scope.putCheck(Scope.ARRAY_CLASS_NAME, arrayKey, arrayEntity);
     }
 

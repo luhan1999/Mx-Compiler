@@ -222,16 +222,16 @@ public class FunctionScopeScanner extends BaseScopeScanner {
             throw new SemanticError(node.location(), String.format("Lack parameter"));
 
         boolean invalidArgType;
-        for (int i = 0; i < paraNum; ++i)
+        for (int i = 0; i < paraNum - firstParaIdx; ++i)
         {
             node.getArgs().get(i).accept(this);
             if (node.getArgs().get(i).getType() instanceof VoidType) invalidArgType = true;
             else if (node.getArgs().get(i).getType() instanceof NullType)
-                     invalidArgType = !(funcEntity.getParameters().get(i).getType() instanceof ClassType || funcEntity.getParameters().get(i).getType() instanceof ArrayType);
+                     invalidArgType = !(funcEntity.getParameters().get(i + firstParaIdx).getType() instanceof ClassType || funcEntity.getParameters().get(i).getType() instanceof ArrayType);
                  else
-                     invalidArgType = !(funcEntity.getParameters().get(i).getType().equals(node.getArgs().get(i).getType()));
+                     invalidArgType = !(funcEntity.getParameters().get(i + firstParaIdx).getType().equals(node.getArgs().get(i).getType()));
             if (invalidArgType)
-                throw new SemanticError(node.getArgs().get(i).location(),String.format("FuncCall Error"));
+                throw new SemanticError(node.getArgs().get(i + firstParaIdx).location(),String.format("FuncCall Error"));
 
         }
         node.setType(funcEntity.getReturnType());
