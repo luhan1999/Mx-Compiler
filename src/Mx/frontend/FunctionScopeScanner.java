@@ -217,8 +217,8 @@ public class FunctionScopeScanner extends BaseScopeScanner {
         FuncEntity funcEntity = currentFuncEntity;
         node.setFuncEntity(funcEntity);
         int paraNum = funcEntity.getParameters().size();
-
-        if (paraNum!= node.getArgs().size())
+        int firstParaIdx = funcEntity.isMember() ? 1 : 0;
+        if (paraNum - firstParaIdx != node.getArgs().size())
             throw new SemanticError(node.location(), String.format("Lack parameter"));
 
         boolean invalidArgType;
