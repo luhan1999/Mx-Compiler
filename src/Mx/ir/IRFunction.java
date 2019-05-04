@@ -20,7 +20,7 @@ public class IRFunction {
     public  String getName() { return name;}
     public List<VarEntity> getParameters() { return funcEntity.getParameters(); }
 
-    //TODO funcEntity
+
     public IRFunction(FuncEntity funcEntity){
         this.funcEntity = funcEntity;
         name = funcEntity.getName();

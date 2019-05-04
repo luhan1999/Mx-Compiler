@@ -42,8 +42,8 @@ public class Compiler
 
     public void compile() throws Exception {
         System.out.println("compiler is running");
-
         buildAst();
+        System.out.println("AST is finished");
 
         GlobalScopePreScanner globalScopePreScanner = new GlobalScopePreScanner();
         globalScopePreScanner.visit(Ast);
@@ -52,11 +52,11 @@ public class Compiler
         FunctionScopeScanner functionScopeScanner = new FunctionScopeScanner(classVarMemberScanner.getGlobalScope());
         functionScopeScanner.visit(Ast);
 
-//        new StaticUsagePreScanner(globalScopePreScanner.getScope()).visit(Ast);
-//
-//        IRBuilder irBuilder = new IRBuilder(globalScopePreScanner.getScope());
-//        irBuilder.visit(Ast);
+        new StaticUsagePreScanner(globalScopePreScanner.getScope()).visit(Ast);
 
+        IRBuilder irBuilder = new IRBuilder(globalScopePreScanner.getScope());
+        irBuilder.visit(Ast);
+        System.out.println("IR is finished");
         System.out.println("compiler finished.");
     }
 }

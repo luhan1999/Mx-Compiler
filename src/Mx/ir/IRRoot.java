@@ -1,6 +1,7 @@
 package Mx.ir;
 
 import Mx.Ast.StmtNode;
+import Mx.Nasm.NASMRegisterSet;
 import Mx.scope.Scope;
 
 import java.util.*;
@@ -18,73 +19,73 @@ public class IRRoot {
         return String.format("__member_%s_%s", className, funcName);
     }
 
-//    public IRRoot() {
-//        insertBuiltInFuncs();
-//    }
+    public IRRoot() {
+        insertBuiltInFuncs();
+    }
 
-//    private void insertBuiltInFuncs() {
-//        IRFunction func;
-//
-//        func = new IRFunction(BUILTIN_STRING_CONCAT_FUNC_NAME, "__builtin_string_concat");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_STRING_EQUAL_FUNC_NAME, "__builtin_string_equal");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_STRING_INEQUAL_FUNC_NAME, "__builtin_string_inequal");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_STRING_LESS_FUNC_NAME, "__builtin_string_less");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_STRING_LESS_EQUAL_FUNC_NAME, "__builtin_string_less_equal");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_PRINT_FUNC_NAME, "_Z5printPc");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_PRINTLN_FUNC_NAME, "_Z7printlnPc");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_PRINT_INT_FUNC_NAME, "_Z8printInti");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_PRINTLN_INT_FUNC_NAME, "_Z10printlnInti");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_GET_STRING_FUNC_NAME, "_Z9getStringv");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_GET_INT_FUNC_NAME, "_Z6getIntv");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_TO_STRING_FUNC_NAME, "_Z8toStringi");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_STRING_SUBSTRING_FUNC_NAME, "_Z27__member___string_substringPcii");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_STRING_PARSEINT_FUNC_NAME, "_Z26__member___string_parseIntPc");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//
-//        func = new IRFunction(BUILTIN_STRING_ORD_FUNC_NAME, "_Z21__member___string_ordPci");
-//        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
-//        addBuiltInFunc(func);
-//    }
+    private void insertBuiltInFuncs() {
+        IRFunction func;
+
+        func = new IRFunction(BUILTIN_STRING_CONCAT_FUNC_NAME, "__builtin_string_concat");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_STRING_EQUAL_FUNC_NAME, "__builtin_string_equal");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_STRING_INEQUAL_FUNC_NAME, "__builtin_string_inequal");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_STRING_LESS_FUNC_NAME, "__builtin_string_less");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_STRING_LESS_EQUAL_FUNC_NAME, "__builtin_string_less_equal");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_PRINT_FUNC_NAME, "_Z5printPc");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_PRINTLN_FUNC_NAME, "_Z7printlnPc");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_PRINT_INT_FUNC_NAME, "_Z8printInti");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_PRINTLN_INT_FUNC_NAME, "_Z10printlnInti");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_GET_STRING_FUNC_NAME, "_Z9getStringv");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_GET_INT_FUNC_NAME, "_Z6getIntv");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_TO_STRING_FUNC_NAME, "_Z8toStringi");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_STRING_SUBSTRING_FUNC_NAME, "_Z27__member___string_substringPcii");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_STRING_PARSEINT_FUNC_NAME, "_Z26__member___string_parseIntPc");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+
+        func = new IRFunction(BUILTIN_STRING_ORD_FUNC_NAME, "_Z21__member___string_ordPci");
+        func.getUsedPhysicalGeneralRegs().addAll(NASMRegisterSet.generalRegs);
+        addBuiltInFunc(func);
+    }
 
     public PhysicalRegister getPreg0() {
         return preg0;

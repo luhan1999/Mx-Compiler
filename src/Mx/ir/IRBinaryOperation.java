@@ -37,6 +37,7 @@ public class IRBinaryOperation extends IRInstruction{
         usedRegValues.add(rhs);
     }
 
+    //TODO
     @Override
     public void setUsedRegisters(Map<IRRegister, IRRegister> renameMap) {
         if (lhs instanceof IRRegister) lhs = renameMap.get(lhs);
