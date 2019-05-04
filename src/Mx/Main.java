@@ -9,8 +9,11 @@ public class Main
 {
     public static void main(String arg[])throws Exception
     {
-        String fin = "E:\\1_Compiler\\fz\\EM-Compiler\\testcase\\input.txt";
+        String fin = null
         String fout = null;
+        
+        //String fin = "E:\\1_Compiler\\fz\\EM-Compiler\\testcase\\input.txt";
+
 
         InputStream inS;
         PrintStream outS;
