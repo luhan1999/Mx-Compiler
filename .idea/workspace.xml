@@ -19,12 +19,23 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Mx/frontend/IRBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="79">
-              <caret line="1186" column="92" selection-start-line="1186" selection-start-column="92" selection-end-line="1186" selection-end-column="92" />
+            <state relative-caret-position="232">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#11319#11320#0" expanded="true" />
                 <element signature="e#11362#11363#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Mx/Compiler/Compiler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1769">
+              <caret line="61" column="38" lean-forward="true" selection-start-line="61" selection-start-column="38" selection-end-line="61" selection-end-column="38" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -35,18 +46,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="176">
               <caret line="46" selection-start-line="46" selection-end-line="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="11" column="70" selection-start-line="11" selection-start-column="70" selection-end-line="11" selection-end-column="70" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -218,18 +217,18 @@
         <option value="$PROJECT_DIR$/src/Mx/Nasm/NASMRegister.java" />
         <option value="$PROJECT_DIR$/src/Mx/Nasm/NASMRegisterSet.java" />
         <option value="$PROJECT_DIR$/src/Mx/ir/IRRoot.java" />
-        <option value="$PROJECT_DIR$/src/Mx/Compiler/Compiler.java" />
         <option value="$PROJECT_DIR$/src/Mx/Main.java" />
         <option value="$PROJECT_DIR$/src/Mx/scope/Scope.java" />
+        <option value="$PROJECT_DIR$/src/Mx/Compiler/Compiler.java" />
         <option value="$PROJECT_DIR$/src/Mx/frontend/IRBuilder.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1912" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -376,7 +375,7 @@
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/gen-visitor" value="true" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/output-dir" value="F:\LhCompiler\src" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/package" value="Mx.Parser" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556943015218" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556961062800" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -454,10 +453,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49948078" visible="true" weight="0.1663113" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49948078" visible="true" weight="0.1663113" />
       <window_info id="Structure" order="1" sideWeight="0.5005192" side_tool="true" weight="0.1663113" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -466,7 +465,7 @@
       <window_info id="Favorites" order="6" sideWeight="0.5005192" side_tool="true" weight="0.1663113" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32917964" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2938733" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2938733" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39771548" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -498,7 +497,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Mx/frontend/IRBuilder.java</url>
-          <line>122</line>
+          <line>121</line>
           <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
@@ -800,16 +799,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/Compiler/Compiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/Ast/IdentifierExprNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="369">
@@ -907,12 +896,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/frontend/IRBuilder.java">
+    <entry file="file://$PROJECT_DIR$/src/Mx/Compiler/Compiler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="1186" column="92" selection-start-line="1186" selection-start-column="92" selection-end-line="1186" selection-end-column="92" />
+        <state relative-caret-position="1769">
+          <caret line="61" column="38" lean-forward="true" selection-start-line="61" selection-start-column="38" selection-end-line="61" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mx/frontend/IRBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          <folding>
             <element signature="e#11319#11320#0" expanded="true" />
             <element signature="e#11362#11363#0" expanded="true" />
           </folding>

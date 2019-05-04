@@ -7,6 +7,7 @@ import Mx.Parser.MxLexer;
 import Mx.Parser.MxParser;
 import Mx.Parser.SyntaxErrorListener;
 
+import Mx.ir.IRRoot;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -56,7 +57,10 @@ public class Compiler
 
         IRBuilder irBuilder = new IRBuilder(globalScopePreScanner.getScope());
         irBuilder.visit(Ast);
-        System.out.println("IR is finished");
+        System.out.println("IRbuild is finished");
+
+        IRRoot ir = irBuilder.getIR();
+
         System.out.println("compiler finished.");
     }
 }
