@@ -288,7 +288,7 @@ public class NASMPrinter implements IRVisitor {
         out.print("\t\t" + op + "\t");
         node.getLhs().accept(this);
         out.print(", ");
-        node.getRhs().accept(this);
+        node.getDest().accept(this);
         out.println();
     }
 
