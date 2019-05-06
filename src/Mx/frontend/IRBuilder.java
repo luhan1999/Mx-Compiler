@@ -17,7 +17,7 @@ public class IRBuilder extends BaseScopeScanner{
     private IRFunction currentFunc = null;
     private BasicBlock currentBB = null;
     private Scope globalScope, currentScope;
-    private List<GlobalVarInit> gloabalInitList = new ArrayList<>();
+    private List<GlobalVarInit> globalInitList = new ArrayList<>();
     private boolean isFuncArgDecl = false, wantAddr = false;
     private BasicBlock currentLoopStepBB, currentLoopAfterBB;
     private String currentClassName = null;
@@ -27,19 +27,18 @@ public class IRBuilder extends BaseScopeScanner{
 
     public IRBuilder(Scope globalScope) {this.globalScope = globalScope;}
 
-    private FuncDeclNode makeInitFunc(){
+    private FuncDeclNode makeInitFunc() {
         List<Node> stmts = new ArrayList<>();
-        for (GlobalVarInit init: gloabalInitList){
+        for (GlobalVarInit init : globalInitList) {
             IdentifierExprNode lhs = new IdentifierExprNode(init.getName(), null);
             VarEntity varEntity = (VarEntity) globalScope.get(Scope.varKey(init.getName()));
             lhs.setVarEntity(varEntity);
             AssignExprNode assignExpr = new AssignExprNode(lhs, init.getInitExpr(), null);
             stmts.add(new ExprStmtNode(assignExpr, null));
         }
-
         BlockStmtNode body = new BlockStmtNode(stmts, null);
-        body.initScope((globalScope));
-        TypeNode retType = new TypeNode(VoidType.getInstance(),null);
+        body.initScope(globalScope);
+        TypeNode retType = new TypeNode(VoidType.getInstance(), null);
         FuncDeclNode funcNode = new FuncDeclNode(retType, INIT_FUNC_NAME, new ArrayList<>(), body, null);
         FuncEntity funcEntity = new FuncEntity(funcNode);
         globalScope.put(Scope.funcKey(INIT_FUNC_NAME), funcEntity);
@@ -48,11 +47,11 @@ public class IRBuilder extends BaseScopeScanner{
         return funcNode;
     }
 
-    private void processIRAssign(RegValue dest, int addrOffset, ExprNode rhs, int size, boolean needMemop){
+    private void processIRAssign(RegValue dest, int addrOffset,  ExprNode rhs, int size, boolean needMemOp) {
         if (rhs.getTrueBB() != null) {
             BasicBlock mergeBB = new BasicBlock(currentFunc, null);
-            if (needMemop) {
-                rhs.getTrueBB().addInst(new IRStore(rhs.getTrueBB(), new IntImmediate(1), Configuration.getRegSize(),dest, addrOffset));
+            if (needMemOp) {
+                rhs.getTrueBB().addInst(new IRStore(rhs.getTrueBB(), new IntImmediate(1), Configuration.getRegSize(), dest, addrOffset));
                 rhs.getFalseBB().addInst(new IRStore(rhs.getFalseBB(), new IntImmediate(0), Configuration.getRegSize(), dest, addrOffset));
             } else {
                 rhs.getTrueBB().addInst(new IRMove(rhs.getTrueBB(), (VirtualRegister) dest, new IntImmediate(1)));
@@ -62,7 +61,7 @@ public class IRBuilder extends BaseScopeScanner{
             if (!rhs.getFalseBB().isHasJumpInst()) rhs.getFalseBB().setJumpInst(new IRJump(rhs.getFalseBB(), mergeBB));
             currentBB = mergeBB;
         } else {
-            if (needMemop) {
+            if (needMemOp) {
                 currentBB.addInst(new IRStore(currentBB, rhs.getRegValue(), Configuration.getRegSize(), dest, addrOffset));
             } else {
                 currentBB.addInst(new IRMove(currentBB, (IRRegister) dest, rhs.getRegValue()));
@@ -219,7 +218,7 @@ public class IRBuilder extends BaseScopeScanner{
             entity.setIrRegister(data);
             if (node.getInit() != null) {
                 GlobalVarInit init = new GlobalVarInit(node.getName(), node.getInit());
-                gloabalInitList.add(init);
+                globalInitList.add(init);
             }
         } else {
             VirtualRegister vreg = new VirtualRegister(node.getName());
@@ -480,7 +479,7 @@ public class IRBuilder extends BaseScopeScanner{
             ExprNode intExpr = ((FuncCallExprNode) arg).getArgs().get(0);
             intExpr.accept(this);
             calleeFunc = ir.getBuiltInFunc(funcName+"Int");
-            vArgs.add(arg.getRegValue());
+            vArgs.add(intExpr.getRegValue());   //fuck  ----- it cost me 6hours to find it
         } else {
             arg.accept(this);
             calleeFunc = ir.getBuiltInFunc(funcName);

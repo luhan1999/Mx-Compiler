@@ -24,7 +24,9 @@ public class NASMTransformer {
     public void run() {
         for (IRFunction irFunction : ir.getFuncs().values()) {
             FuncInfo funcInfo = new FuncInfo();
+            int iii= 0;
             for (PhysicalRegister preg : irFunction.getUsedPhysicalGeneralRegs()) {
+                iii = iii + 1;
                 if (preg.isCalleeSave()) funcInfo.usedCalleeSaveRegs.add(preg);
                 if (preg.isCallerSave()) funcInfo.usedCallerSaveRegs.add(preg);
             }

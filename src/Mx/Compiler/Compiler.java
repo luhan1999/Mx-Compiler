@@ -21,13 +21,14 @@ import java.io.PrintStream;
 public class Compiler
 {
     private  InputStream Fin;
-    private  PrintStream Fout,nasmOutS;
+    private  PrintStream Fout,irOutS,nasmOutS;
     private  ProgramNode Ast;
 
-    public Compiler(InputStream fin, PrintStream fout, PrintStream nasmOutS)
+    public Compiler(InputStream fin, PrintStream fout, PrintStream irOutS, PrintStream nasmOutS)
     {
         Fin = fin;
         Fout = fout;
+        this.irOutS = irOutS;
         this.nasmOutS = nasmOutS;
     }
 
@@ -64,6 +65,8 @@ public class Compiler
         IRRoot ir = irBuilder.getIR();
 
         new BinaryOpTransformer(ir).run();
+//        if (irOutS != null) new IRPrinter(irOutS).visit(ir);
+//        new StaticDataProcessor(ir).run();
         new RegisterPreprocessor(ir).run();
         new RegLivelinessAnalysis(ir).run();
         new RegisterAllocator(ir).run();
