@@ -2,6 +2,7 @@ package Mx.Compiler;
 
 
 import Mx.Ast.*;
+import Mx.backend.*;
 import Mx.frontend.*;
 import Mx.Parser.MxLexer;
 import Mx.Parser.MxParser;
@@ -20,13 +21,14 @@ import java.io.PrintStream;
 public class Compiler
 {
     private  InputStream Fin;
-    private  PrintStream Fout;
+    private  PrintStream Fout,nasmOutS;
     private  ProgramNode Ast;
 
-    public Compiler(InputStream fin, PrintStream fout)
+    public Compiler(InputStream fin, PrintStream fout, PrintStream nasmOutS)
     {
         Fin = fin;
         Fout = fout;
+        this.nasmOutS = nasmOutS;
     }
 
     private void buildAst() throws Exception{
@@ -60,6 +62,13 @@ public class Compiler
         System.out.println("IRbuild is finished");
 
         IRRoot ir = irBuilder.getIR();
+
+        new BinaryOpTransformer(ir).run();
+        new RegisterPreprocessor(ir).run();
+        new RegLivelinessAnalysis(ir).run();
+        new RegisterAllocator(ir).run();
+        new NASMTransformer(ir).run();
+        new NASMPrinter(nasmOutS).visit(ir);
 
         System.out.println("compiler finished.");
     }
