@@ -5,4 +5,7 @@
 
 set -e
 cd "$(dirname "$0")"
-java -cp ./lib/*:./bin Main "codegen"
+export M_="java -classpath ./lib/antlr-4.7.2-complete.jar:./bin Mx.Main"
+#cat > program.cpp   # save everything in stdin to program.txt
+$M_
+#cat program.asm
