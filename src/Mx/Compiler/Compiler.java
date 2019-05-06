@@ -44,9 +44,9 @@ public class Compiler
     }
 
     public void compile() throws Exception {
-        System.out.println("compiler is running");
+        //System.out.println("compiler is running");
         buildAst();
-        System.out.println("AST is finished");
+        //System.out.println("AST is finished");
 
         GlobalScopePreScanner globalScopePreScanner = new GlobalScopePreScanner();
         globalScopePreScanner.visit(Ast);
@@ -59,7 +59,7 @@ public class Compiler
 
         IRBuilder irBuilder = new IRBuilder(globalScopePreScanner.getScope());
         irBuilder.visit(Ast);
-        System.out.println("IRbuild is finished");
+        //System.out.println("IRbuild is finished");
 
         IRRoot ir = irBuilder.getIR();
 
@@ -70,6 +70,6 @@ public class Compiler
         new NASMTransformer(ir).run();
         new NASMPrinter(nasmOutS).visit(ir);
 
-        System.out.println("compiler finished.");
+        //System.out.println("compiler finished.");
     }
 }
