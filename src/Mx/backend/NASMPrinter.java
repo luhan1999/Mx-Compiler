@@ -166,7 +166,7 @@ public class NASMPrinter implements IRVisitor {
             out.print("\t\tmov\t\trbx, ");
             node.getRhs().accept(this);
             out.println();
-            out.println("\t\tmov\t\trax, ");
+            out.print("\t\tmov\t\trax, ");
             node.getLhs().accept(this);
             out.println();
             out.println("\t\tmov\t\t" + preg0.getName() + ", rdx");
