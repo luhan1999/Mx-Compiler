@@ -216,7 +216,7 @@ public class RegisterAllocator {
                                         usedPreg0 = true;
                                     }
                                     inst.prependInst((new IRLoad(bb, preg, Configuration.getRegSize(), color, 0)));
-                                    renameMap.put(reg ,color);
+                                    renameMap.put(reg ,preg);
                                     func.getUsedPhysicalGeneralRegs().add(preg);
                                 } else {
                                     renameMap.put(reg, color);
