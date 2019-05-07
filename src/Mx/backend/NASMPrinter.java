@@ -285,11 +285,10 @@ public class NASMPrinter implements IRVisitor {
             default:
                 throw new CompilerError("invalid comparison");
         }
-        out.print("\t\t" + op + "\t");
-        node.getLhs().accept(this);
-        out.print(", ");
+        out.println("\t\t" + op + "\tal");
+        out.print("\t\tmov\t\t");
         node.getDest().accept(this);
-        out.println();
+        out.println(", rax");
     }
 
     @Override
