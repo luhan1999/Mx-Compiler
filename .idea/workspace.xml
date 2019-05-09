@@ -26,6 +26,18 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="232">
+              <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Mx/backend/RegLivelinessAnalysis.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="565">
@@ -182,7 +194,6 @@
         <option value="$PROJECT_DIR$/src/Mx/ir/IRStore.java" />
         <option value="$PROJECT_DIR$/src/Mx/frontend/StaticUsagePreScanner.java" />
         <option value="$PROJECT_DIR$/src/Mx/ir/IRNode" />
-        <option value="$PROJECT_DIR$/src/Mx/Main.java" />
         <option value="$PROJECT_DIR$/src/Mx/frontend/IRBuilder.java" />
         <option value="$PROJECT_DIR$/src/Mx/frontend/BinaryOpTransformer.java" />
         <option value="$PROJECT_DIR$/src/Mx/Nasm/NASMRegisterSet.java" />
@@ -190,6 +201,7 @@
         <option value="$PROJECT_DIR$/src/Mx/backend/RegisterPreprocessor.java" />
         <option value="$PROJECT_DIR$/src/Mx/backend/RegisterAllocator.java" />
         <option value="$PROJECT_DIR$/src/Mx/backend/RegLivelinessAnalysis.java" />
+        <option value="$PROJECT_DIR$/src/Mx/Main.java" />
       </list>
     </option>
   </component>
@@ -371,7 +383,7 @@
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/gen-visitor" value="true" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/output-dir" value="F:\LhCompiler\src" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/package" value="Mx.Parser" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557369484385" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557369592459" />
     <property name="last_opened_file_path" value="E:/1_Compiler/fz/EM-Compiler" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -667,16 +679,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="11" column="75" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="75" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/scope/VarEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
@@ -969,6 +971,16 @@
             <element signature="imports" expanded="true" />
             <element signature="e#204#205#0" expanded="true" />
             <element signature="e#232#233#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
