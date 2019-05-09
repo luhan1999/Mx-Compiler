@@ -11,7 +11,7 @@ public class NASMPrinter implements IRVisitor {
     private PrintStream out;
     private Map<String, Integer> idCounter = new HashMap<>();
     private Map<Object, String> idMap = new HashMap<>();
-    private PhysicalRegister preg0,preg1;
+    private PhysicalRegister preg0;
 
     public NASMPrinter(PrintStream out) { this.out = out; }
 
@@ -32,7 +32,7 @@ public class NASMPrinter implements IRVisitor {
         return id;
     }
 
-    private  String bbId(BasicBlock bb){
+    private String bbId(BasicBlock bb){
         String id = idMap.get(bb);
         if (id == null) {
             id = "__block_" + newId(bb.getName());
@@ -44,22 +44,18 @@ public class NASMPrinter implements IRVisitor {
     @Override
     public  void visit(IRRoot node){
         preg0 = node.getPreg0();
-        preg1 = node.getPreg1();
+
 
         idMap.put(node.getFuncs().get("main").getStartBB(), "main");
 
-        out.println("\t\tglobal\tmain");
-        out.println();
-
-        out.println("\t\textern\tmalloc");
-        out.println();
+        out.println("\t\tglobal\tmain\n");
+        out.println("\t\textern\tmalloc\n");
 
         if (node.getStaticDataList().size() > 0){
             isBssSection = true;
             out.println("\t\tsection\t.bss");
-            for (StaticData staticData : node.getStaticDataList()){
+            for (StaticData staticData : node.getStaticDataList())
                 staticData.accept(this);
-            }
             out.println();
             isBssSection = false;
         }
@@ -67,25 +63,22 @@ public class NASMPrinter implements IRVisitor {
         if (node.getStaticStrs().size() > 0){
             isDataSection = true;
             out.println("\t\tsection\t.data");
-            for (StaticString staticString : node.getStaticStrs().values()){
+            for (StaticString staticString : node.getStaticStrs().values())
                 staticString.accept(this);
-            }
             out.println();
             isDataSection = false;
         }
 
         out.println("\t\tsection\t.text\n");
-        for (IRFunction irFunction : node.getFuncs().values()){
+        for (IRFunction irFunction : node.getFuncs().values())
             irFunction.accept(this);
-        }
         out.println();
 
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("lib/builtin_functions.asm"));
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null)
                 out.println(line);
-            }
         } catch (IOException e) {
             throw new CompilerError("IO exception when reading builtin functions from file");
         }
@@ -94,19 +87,15 @@ public class NASMPrinter implements IRVisitor {
     @Override
     public void visit(IRFunction node){
         out.printf("# function %s\n\n", node.getName());
-        int bbIdx = 0;
-        for (BasicBlock bb : node.getReversePostOrder()){
+        for (BasicBlock bb : node.getReversePostOrder())
             bb.accept(this);
-            ++bbIdx;
-        }
     }
 
     @Override
     public void visit(BasicBlock node) {
         out.printf("%s:\n", bbId(node));
-        for (IRInstruction inst = node.getFirstInst(); inst != null; inst = inst.getNextInst()) {
+        for (IRInstruction inst = node.getFirstInst(); inst != null; inst = inst.getNextInst())
             inst.accept(this);
-        }
         out.println();
     }
 
@@ -140,7 +129,7 @@ public class NASMPrinter implements IRVisitor {
 
     @Override
     public void visit(IRUnaryOperation node) {
-        String op;
+        String op = null;
         switch (node.getOp()) {
             case BITWISE_NOT:
                 op = "not";
@@ -148,8 +137,6 @@ public class NASMPrinter implements IRVisitor {
             case NEG:
                 op = "neg";
                 break;
-            default:
-                throw new CompilerError("invalid unary operation");
         }
         out.print("\t\tmov\t\t");
         node.getDest().accept(this);
