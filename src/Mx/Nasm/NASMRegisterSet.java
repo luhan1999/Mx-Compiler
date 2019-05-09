@@ -12,8 +12,8 @@ public class NASMRegisterSet {
     public static final NASMRegister rax, rcx, rdx, rbx, rsi, rdi, rsp, rbp, r8, r9, r10, r11, r12, r13, r14, r15;
     public static final List<PhysicalRegister> arg6;
 
-    //          Function Arguments: rdi, rsi, rdx, rcx, r8, r9,  stack
-    //          Return value:  rax
+    // Function Arguments: rdi, rsi, rdx, rcx, r8, r9,  stack
+    // Return value:  rax
 
     static {
         List<NASMRegister> all = new ArrayList<>();
