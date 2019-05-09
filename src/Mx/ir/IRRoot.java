@@ -215,9 +215,7 @@ public class IRRoot {
         return hasDivShiftInst;
     }
 
-    public int getMaxNumFuncArgs() {
-        return maxNumFuncArgs;
-    }
+    public int getMaxNumFuncArgs() { return maxNumFuncArgs; }
 
     public void setHasDivShiftInst(boolean hasDivShiftInst) {
         this.hasDivShiftInst = hasDivShiftInst;

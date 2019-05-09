@@ -12,6 +12,9 @@ public class NASMRegisterSet {
     public static final NASMRegister rax, rcx, rdx, rbx, rsi, rdi, rsp, rbp, r8, r9, r10, r11, r12, r13, r14, r15;
     public static final List<PhysicalRegister> arg6;
 
+    //          Function Arguments: rdi, rsi, rdx, rcx, r8, r9,  stack
+    //          Return value:  rax
+
     static {
         List<NASMRegister> all = new ArrayList<>();
         List<NASMRegister> general = new ArrayList<>();
@@ -26,7 +29,6 @@ public class NASMRegisterSet {
         rdi = new NASMRegister("rdi", false, true, false, 0);
         rsp = new NASMRegister("rsp", false, true, false, -1);
         rbp = new NASMRegister("rbp", false, false, true, -1);
-        // r8 and r9 are actually general registers
         r8 = new NASMRegister("r8", true, true, false, 4);
         r9 = new NASMRegister("r9", true, true, false, 5);
         r10 = new NASMRegister("r10", true, true, false, -1);

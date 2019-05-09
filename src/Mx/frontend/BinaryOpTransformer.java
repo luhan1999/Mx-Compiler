@@ -8,6 +8,7 @@ public class BinaryOpTransformer {
         this.ir = ir;
     }
 
+    //four ops exchange to three ops
     public void run() {
         for (IRFunction irFunction : ir.getFuncs().values()) {
             for (BasicBlock bb : irFunction.getReversePostOrder()) {

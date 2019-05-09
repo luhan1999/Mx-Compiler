@@ -67,13 +67,12 @@ public class StaticDataProcessor {
             // load static data at the beginning of function
             BasicBlock startBB = irFunction.getStartBB();
             IRInstruction firtInst = startBB.getFirstInst();
-            funcInfo.staticDataVregMap.forEach((staticData, virtualRegister) ->
-                    firtInst.prependInst(new IRLoad(startBB, virtualRegister, Configuration.getRegSize(), staticData, staticData instanceof StaticString)));
+            for (StaticData staticData : funcInfo.staticDataVregMap.keySet())
+                firtInst.prependInst(new IRLoad(startBB, funcInfo.staticDataVregMap.get(staticData), 8, staticData, staticData instanceof StaticString));
         }
 
-        for (IRFunction builtFunc : ir.getBuiltInFuncs().values()) {
-            funcInfoMap.put(builtFunc, new FuncInfo());
-        }
+        for (IRFunction builtFunc : ir.getBuiltInFuncs().values()) funcInfoMap.put(builtFunc, new FuncInfo());
+
         for (IRFunction irFunction : ir.getFuncs().values()) {
             FuncInfo funcInfo = funcInfoMap.get(irFunction);
             funcInfo.recursiveUsedStaticData.addAll(funcInfo.staticDataVregMap.keySet());
@@ -105,7 +104,7 @@ public class StaticDataProcessor {
                     if (calleeFuncInfo.recursiveDefinedStaticData.isEmpty()) continue;
                     Set<StaticData> loadStaticDataSet = new HashSet<>();
                     loadStaticDataSet.addAll(calleeFuncInfo.recursiveDefinedStaticData);
-                    loadStaticDataSet.retainAll(usedStaticData);
+                    loadStaticDataSet.retainAll(usedStaticData);  //get the common set
                     for (StaticData staticData : loadStaticDataSet) {
                         if (staticData instanceof StaticString) continue;
                         inst.appendInst(new IRLoad(bb, funcInfo.staticDataVregMap.get(staticData), Configuration.getRegSize(), staticData, staticData instanceof StaticString));

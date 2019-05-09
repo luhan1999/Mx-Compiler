@@ -15,7 +15,7 @@ public class RegisterPreprocessor {
             VirtualRegister argVreg = func.getArgVRegList().get(i);
             StackSlot argSlot = new StackSlot(func, "arg" + i, true);
             func.getArgsStackSlotMap().put(argVreg, argSlot);
-            firstInst.prependInst(new IRLoad(firstInst.getParentBB(), argVreg, Configuration.getRegSize(), argSlot,0));
+            firstInst.prependInst(new IRLoad(firstInst.getParentBB(), argVreg, 8, argSlot,0));
         }
 
         if (func.getArgVRegList().size() > 0) func.getArgVRegList().get(0).setForcedPhysicalRegister(NASMRegisterSet.rdi);

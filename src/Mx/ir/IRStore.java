@@ -32,9 +32,7 @@ public class IRStore extends IRInstruction {
     }
 
     @Override
-    public void setDefinedRegister(IRRegister vreg) {
-        // no actions
-    }
+    public void setDefinedRegister(IRRegister vreg) { }
 
     @Override
     public void reloadUsedRegistersRegValues() {

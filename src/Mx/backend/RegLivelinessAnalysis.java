@@ -27,13 +27,13 @@ public class RegLivelinessAnalysis {
         Set<VirtualRegister> liveOut = new HashSet<>();
 
         // iterations to solve liveliness equation
-        boolean converged = false;
-        while (!converged) {
-            converged = true;
+        boolean changed = false;
+        while (!changed) {
+            changed = true;
             for (BasicBlock bb : reversePreOrder) {
                 for (IRInstruction inst = bb.getLastInst(); inst != null; inst = inst.getPrevInst()) {
-                    liveIn.clear();
-                    liveOut.clear();
+                    liveIn.clear();  // not defined but used after the Inst
+                    liveOut.clear(); // not defined but used after the block
                     if (inst instanceof IRJumpInstruction) {
                         if (inst instanceof IRJump) {
                             liveOut.addAll(((IRJump) inst).getTargetBB().getFirstInst().liveIn);
@@ -56,12 +56,12 @@ public class RegLivelinessAnalysis {
                         }
                     }
                     if (!inst.liveIn.equals(liveIn)) {
-                        converged = false;
+                        changed = false;
                         inst.liveIn.clear();
                         inst.liveIn.addAll(liveIn);
                     }
                     if (!inst.liveOut.equals(liveOut)) {
-                        converged = false;
+                        changed = false;
                         inst.liveOut.clear();
                         inst.liveOut.addAll(liveOut);
                     }

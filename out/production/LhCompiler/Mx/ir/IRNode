@@ -1,0 +1,29 @@
+IRRoot
+GlobalVarInit
+IRFunction
+BasicBlock
+Regvalue
+    IntImmediate
+    IRRegister
+        PhysicalRegister
+        VirtualRegister
+        StackSlot
+        StaticData
+            StaticString
+            StaticVar
+IRInstruction
+    IRBinaryOperation
+    IRUnaryOperation
+    IRJumpInstruction
+        IRBranch
+        IRJump
+        IRReturn
+    IRComparison
+    IRFunctionCall
+    IRHeapAlloc
+    IRLoad
+    IRMove
+    IRPop
+    IRPush
+    IRStore
+

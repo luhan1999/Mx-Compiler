@@ -21,9 +21,7 @@ public class IRPop extends IRInstruction{
     }
 
     @Override
-    public void reloadUsedRegistersRegValues() {
-        // no actions
-    }
+    public void reloadUsedRegistersRegValues() {}
 
     @Override
     public IRRegister getDefinedRegister() {
@@ -31,14 +29,10 @@ public class IRPop extends IRInstruction{
     }
 
     @Override
-    public void setUsedRegisters(Map<IRRegister, IRRegister> renameMap) {
-        // no actions
-    }
+    public void setUsedRegisters(Map<IRRegister, IRRegister> renameMap) {}
 
     @Override
-    public void setDefinedRegister(IRRegister vreg) {
-        // no actions
-    }
+    public void setDefinedRegister(IRRegister vreg) {}
 
     public PhysicalRegister getPreg() {
         return preg;

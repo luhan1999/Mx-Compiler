@@ -34,10 +34,8 @@ public class StaticUsagePreScanner extends BaseScopeScanner{
             }
         }
         for (VarEntity varEntity : unUsedStaticSet) {
-            //System.err.println("unUsedStatic? " + varEntity.getName());
             if (usedStaticSet.contains(varEntity)) continue;
             varEntity.setUnUsed(true);
-            //System.err.println("unUsedStatic: " + varEntity.getName());
         }
     }
 

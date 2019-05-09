@@ -78,8 +78,6 @@ public abstract class IRInstruction {
     public List<IRRegister> getUsedRegisters() { return usedRegisters; }
     public List<RegValue> getUsedRegValues() { return usedRegValues; }
 
-
-
     public abstract IRRegister getDefinedRegister();
 
     public abstract void setUsedRegisters(Map<IRRegister, IRRegister> renameMap);

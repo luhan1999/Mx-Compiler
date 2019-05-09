@@ -19,7 +19,7 @@ public class IRBuilder extends BaseScopeScanner{
     private Scope globalScope, currentScope;
     private List<GlobalVarInit> globalInitList = new ArrayList<>();
     private boolean isFuncArgDecl = false, wantAddr = false;
-    private BasicBlock currentLoopStepBB, currentLoopAfterBB;
+    private BasicBlock currentLoopStepBB, currentLoopAfterBB; //for continue or break;
     private String currentClassName = null;
     private boolean assignLhs = false, uselessStatic = false;
 
@@ -27,7 +27,8 @@ public class IRBuilder extends BaseScopeScanner{
 
     public IRBuilder(Scope globalScope) {this.globalScope = globalScope;}
 
-    private FuncDeclNode makeInitFunc() {
+    //create a InitFunc to Initialize globalVars
+    private FuncDeclNode createInitFunc() {
         List<Node> stmts = new ArrayList<>();
         for (GlobalVarInit init : globalInitList) {
             IdentifierExprNode lhs = new IdentifierExprNode(init.getName(), null);
@@ -42,8 +43,8 @@ public class IRBuilder extends BaseScopeScanner{
         FuncDeclNode funcNode = new FuncDeclNode(retType, INIT_FUNC_NAME, new ArrayList<>(), body, null);
         FuncEntity funcEntity = new FuncEntity(funcNode);
         globalScope.put(Scope.funcKey(INIT_FUNC_NAME), funcEntity);
-        IRFunction newIRFunc = new IRFunction(funcEntity);
-        ir.addFunc(newIRFunc);
+        IRFunction initIRFunc = new IRFunction(funcEntity);
+        ir.addFunc(initIRFunc);
         return funcNode;
     }
 
@@ -51,8 +52,8 @@ public class IRBuilder extends BaseScopeScanner{
         if (rhs.getTrueBB() != null) {
             BasicBlock mergeBB = new BasicBlock(currentFunc, null);
             if (needMemOp) {
-                rhs.getTrueBB().addInst(new IRStore(rhs.getTrueBB(), new IntImmediate(1), Configuration.getRegSize(), dest, addrOffset));
-                rhs.getFalseBB().addInst(new IRStore(rhs.getFalseBB(), new IntImmediate(0), Configuration.getRegSize(), dest, addrOffset));
+                rhs.getTrueBB().addInst(new IRStore(rhs.getTrueBB(), new IntImmediate(1), 8, dest, addrOffset));
+                rhs.getFalseBB().addInst(new IRStore(rhs.getFalseBB(), new IntImmediate(0), 8, dest, addrOffset));
             } else {
                 rhs.getTrueBB().addInst(new IRMove(rhs.getTrueBB(), (VirtualRegister) dest, new IntImmediate(1)));
                 rhs.getFalseBB().addInst(new IRMove(rhs.getFalseBB(), (VirtualRegister) dest, new IntImmediate(0)));
@@ -111,7 +112,7 @@ public class IRBuilder extends BaseScopeScanner{
             }
         }
 
-        FuncDeclNode initFunc = makeInitFunc();
+        FuncDeclNode initFunc = createInitFunc();
         initFunc.accept(this);
 
         for (DeclNode decl : node.getDecls()) {
@@ -141,7 +142,7 @@ public class IRBuilder extends BaseScopeScanner{
         currentFunc = ir.getFunc(funcName);
         currentBB = currentFunc.genFirstBB();
         //for parameter declaration
-        Scope currentScopeBak = currentScope;
+        Scope tmpcurrentScope = currentScope;
         currentScope = node.getBody().getScope();
         if (currentClassName != null){
             VarEntity entity = (VarEntity) currentScope.get(Scope.varKey(Scope.THIS_PARA_NAME));
@@ -154,13 +155,14 @@ public class IRBuilder extends BaseScopeScanner{
             argDecl.accept(this);
         }
         isFuncArgDecl = false;
-        currentScope = currentScopeBak;
+        currentScope = tmpcurrentScope;
 
         // call global init function
         if (node.getName().equals("main")) {
             currentBB.addInst(new IRFunctionCall(currentBB, ir.getFunc(INIT_FUNC_NAME), new ArrayList<>(), null));
         }
         node.getBody().accept(this);
+        //force to make a jumpInst
         if (!currentBB.isHasJumpInst()) {
             if (node.getReturnType() == null || node.getReturnType().getType() instanceof VoidType) {
                 currentBB.setJumpInst(new IRReturn(currentBB, null));
@@ -209,11 +211,12 @@ public class IRBuilder extends BaseScopeScanner{
     @Override
     public void visit(VarDeclNode node){
         VarEntity entity = (VarEntity) currentScope.get(Scope.varKey(node.getName()));
+        //StaticUsagePreScanner to remove unused
         if (entity.isUnUsed()) return;
         if (currentScope.isTop()){
             //global variables should be placed in data section
             Type type = node.getType().getType();
-            StaticData data = new StaticVar(node.getName(), Configuration.getRegSize());
+            StaticData data = new StaticVar(node.getName(), 8);
             ir.addStaticData(data);
             entity.setIrRegister(data);
             if (node.getInit() != null) {
@@ -229,9 +232,11 @@ public class IRBuilder extends BaseScopeScanner{
             if (node.getInit() == null) {
                 if (!isFuncArgDecl) {
                     // set default value to 0 if variable is not initialized
-                    currentBB.addInst(new IRMove(currentBB, vreg, new IntImmediate(0)));
+                    // However we maybe don't need to initialized
+                    //currentBB.addInst(new IRMove(currentBB, vreg, new IntImmediate(0)));
                 }
             } else {
+                // set BB to solve "a || b || c && d" such
                 if (node.getInit().getType() instanceof BoolType && !(node.getInit() instanceof BoolConstExprNode)) {
                     node.getInit().setTrueBB(new BasicBlock(currentFunc, null));
                     node.getInit().setFalseBB(new BasicBlock(currentFunc, null));
@@ -274,6 +279,7 @@ public class IRBuilder extends BaseScopeScanner{
             node.getCond().setTrueBB(thenBB);
             node.getCond().setFalseBB(elseBB);
             node.getCond().accept(this);
+            // visit BoolConstExprNode we should add JumpInst
             if (node.getCond() instanceof BoolConstExprNode) {
                 currentBB.setJumpInst(new IRBranch(currentBB, node.getCond().getRegValue(), node.getCond().getTrueBB(), node.getCond().getFalseBB()));
             }
@@ -414,7 +420,7 @@ public class IRBuilder extends BaseScopeScanner{
               node.getExpr().setFalseBB(new BasicBlock(currentFunc, null));
               node.getExpr().accept(this);
               VirtualRegister vreg = new VirtualRegister("retBoolValue");
-              processIRAssign(vreg, 0, node.getExpr(), Configuration.getRegSize(), false);
+              processIRAssign(vreg, 0, node.getExpr(), 8, false);
               currentBB.setJumpInst((new IRReturn(currentBB,vreg)));
           } else {
               node.getExpr().accept(this);
@@ -425,10 +431,11 @@ public class IRBuilder extends BaseScopeScanner{
 
     private void processSelfIncDec(ExprNode expr, ExprNode node, boolean isSuffix, boolean isInc){
         boolean needMemOp = isMemoryAccess(expr);
-        boolean bakWantAddr = wantAddr;
+        boolean tmpWantAddr = wantAddr;
 
         wantAddr = false;
         expr.accept(this);
+        //i++ we should first get the value
         if (isSuffix) {
             VirtualRegister vreg = new VirtualRegister(null);
             currentBB.addInst(new IRMove(currentBB, vreg, expr.getRegValue()));
@@ -447,13 +454,13 @@ public class IRBuilder extends BaseScopeScanner{
 
             VirtualRegister vreg = new VirtualRegister(null);
             currentBB.addInst(new IRBinaryOperation(currentBB, vreg, op, expr.getRegValue(), one));
-            currentBB.addInst(new IRStore(currentBB, vreg, Configuration.getRegSize(), expr.getAddrValue(), expr.getAddrOffset()));
+            currentBB.addInst(new IRStore(currentBB, vreg, 8, expr.getAddrValue(), expr.getAddrOffset()));
             if (!isSuffix){
                 expr.setRegValue(vreg);
             }
         } else currentBB.addInst(new IRBinaryOperation(currentBB, (IRRegister) expr.getRegValue(), op, expr.getRegValue(), one));
 
-        wantAddr = bakWantAddr;
+        wantAddr = tmpWantAddr;
 
     }
 
@@ -464,7 +471,7 @@ public class IRBuilder extends BaseScopeScanner{
 
     private void processPrintFuncCall(ExprNode arg, String funcName){
         if (arg instanceof  BinaryExprNode){
-            // A B can only be String  (which defined)
+            // A B can only be String  (which defined),so we can get below
             // print(A + B); -> print(A); print(B);
             // println(A + B); -> print(A); println(B);
             processPrintFuncCall(((BinaryExprNode) arg).getLhs(), "print");
@@ -490,7 +497,7 @@ public class IRBuilder extends BaseScopeScanner{
     }
 
     private void processBuiltInFuncCall(FuncCallExprNode node, ExprNode thisExpr, FuncEntity funcEntity, String funcName){
-        boolean wantAddrBak = wantAddr;
+        boolean tmpwantAddr = wantAddr;
         wantAddr = false;
         ExprNode arg0,arg1;
         VirtualRegister vreg;
@@ -578,7 +585,7 @@ public class IRBuilder extends BaseScopeScanner{
             default:
                 throw new CompilerError("invalid built-in function call");
         }
-        wantAddr = wantAddrBak;
+        wantAddr = tmpwantAddr;
     }
 
     @Override
@@ -634,13 +641,13 @@ public class IRBuilder extends BaseScopeScanner{
 
     @Override
     public void visit(SubscriptExprNode node){
-        boolean wantAddrBak = wantAddr;
+        boolean tmpwantAddr = wantAddr;
         wantAddr = false;
         node.getArr().accept(this);
         if (uselessStatic) return;
         assignLhs = false;
         node.getSub().accept(this);
-        wantAddr = wantAddrBak;
+        wantAddr = tmpwantAddr;
 
         VirtualRegister vreg = new VirtualRegister(null);
         IntImmediate elementSize = new IntImmediate(node.getType().getVarSize());
@@ -649,10 +656,11 @@ public class IRBuilder extends BaseScopeScanner{
 
         if (wantAddr) {
             node.setAddrValue(vreg);
-            node.setAddrOffset(Configuration.getRegSize());
+            node.setAddrOffset(8);
         } else {
-            currentBB.addInst(new IRLoad(currentBB, vreg, node.getType().getVarSize(), vreg, Configuration.getRegSize()));
+            currentBB.addInst(new IRLoad(currentBB, vreg, node.getType().getVarSize(), vreg, 8));
             node.setRegValue(vreg);
+            //May be the node is boolean, to solve &&||problem
             if (node.getTrueBB() != null) {
                 currentBB.setJumpInst(new IRBranch(currentBB, node.getRegValue(), node.getTrueBB(), node.getFalseBB()));
             }
@@ -661,11 +669,11 @@ public class IRBuilder extends BaseScopeScanner{
 
     @Override
     public void visit(MemberAccessExprNode node){
-        boolean wantAddrBak = wantAddr;
+        boolean tmpwantAddr = wantAddr;
         wantAddr = false;
         node.getExpr().accept(this);
         assignLhs = false;
-        wantAddr = wantAddrBak;
+        wantAddr = tmpwantAddr;
 
         RegValue classAddr = node.getExpr().getRegValue();
         String className = ((ClassType) (node.getExpr().getType())).getName();
@@ -729,14 +737,14 @@ public class IRBuilder extends BaseScopeScanner{
     private void processArrayNew(NewExprNode node, VirtualRegister oreg, RegValue addr, int idx) {
         VirtualRegister vreg = new VirtualRegister(null);
         ExprNode dim = node.getDims().get(idx);
-        boolean wantAddrBak = wantAddr;
+        boolean tmpwantAddr = wantAddr;
         wantAddr = false;
         dim.accept(this);
-        wantAddr = wantAddrBak;
-        currentBB.addInst(new IRBinaryOperation(currentBB, vreg, IRBinaryOperation.IRBinaryOp.MUL, dim.getRegValue(), new IntImmediate(Configuration.getRegSize())));
-        currentBB.addInst(new IRBinaryOperation(currentBB, vreg, IRBinaryOperation.IRBinaryOp.ADD, vreg, new IntImmediate(Configuration.getRegSize())));
+        wantAddr = tmpwantAddr;
+        currentBB.addInst(new IRBinaryOperation(currentBB, vreg, IRBinaryOperation.IRBinaryOp.MUL, dim.getRegValue(), new IntImmediate(8)));
+        currentBB.addInst(new IRBinaryOperation(currentBB, vreg, IRBinaryOperation.IRBinaryOp.ADD, vreg, new IntImmediate(8)));
         currentBB.addInst(new IRHeapAlloc(currentBB, vreg, vreg));
-        currentBB.addInst(new IRStore(currentBB, dim.getRegValue(), Configuration.getRegSize(), vreg, 0));
+        currentBB.addInst(new IRStore(currentBB, dim.getRegValue(), 8, vreg, 0));
         if (idx < node.getDims().size() - 1) {
             VirtualRegister loop_idx = new VirtualRegister(null);
             VirtualRegister addrNow = new VirtualRegister(null);
@@ -776,7 +784,7 @@ public class IRBuilder extends BaseScopeScanner{
             String className = ((ClassType) newType).getName();
             ClassEntity classEntity = (ClassEntity) globalScope.get(Scope.classKey(className));
             currentBB.addInst(new IRHeapAlloc(currentBB, vreg, new IntImmediate(classEntity.getMemorySize())));
-            //call consttruction function
+            //call conststruction function
             String funcName = IRRoot.irMemberFuncName(className, className);
             IRFunction irFunc = ir.getFunc(funcName);
             if (irFunc != null) {
@@ -880,6 +888,7 @@ public class IRBuilder extends BaseScopeScanner{
         node.getRhs().accept(this);
 
         RegValue lhs = node.getLhs().getRegValue(), rhs = node.getRhs().getRegValue(), tmp;
+        //pre-get the Const value
         boolean bothConst = lhs instanceof IntImmediate && rhs instanceof IntImmediate;
         int lhsImm = 0, rhsImm = 0;
         if (lhs instanceof IntImmediate) lhsImm = ((IntImmediate) lhs).getValue();
@@ -1143,7 +1152,7 @@ public class IRBuilder extends BaseScopeScanner{
             dest = node.getLhs().getRegValue();
             addrOffset = 0;
         }
-        processIRAssign(dest, addrOffset, node.getRhs(), Configuration.getRegSize(), needMemOp);
+        processIRAssign(dest, addrOffset, node.getRhs(), 8, needMemOp);
         node.setRegValue(node.getRhs().getRegValue());
     }
 

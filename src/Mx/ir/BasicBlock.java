@@ -36,7 +36,6 @@ public class BasicBlock {
 
     public String getName() { return name; }
 
-    //TOthink: why differ from prev and next
     public void addPrevBB(BasicBlock bb) { prevBBset.add(bb); }
     public void addNextBB(BasicBlock bb) {
         nextBBset.add(bb);
