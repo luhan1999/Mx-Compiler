@@ -15,6 +15,30 @@ public class RegisterAllocator {
     private PhysicalRegister preg0,preg1;
     private int numColors;
 
+    private Map<VirtualRegister, VirtualRegInfo> vregInfoMap = new HashMap<>();
+    private List<VirtualRegister> vregOrder = new ArrayList<>();
+    private Set<PhysicalRegister> usedColors = new HashSet<>();
+    private Set<VirtualRegister> vregNodes = new HashSet<>();
+    private Set<VirtualRegister> degreeSmallVregNodes = new HashSet<>();
+    private Map<IRRegister, IRRegister> renameMap = new HashMap<>();
+
+    private class VirtualRegInfo{
+        Set<VirtualRegister> neighbours = new HashSet<>();
+        boolean removed = false;
+        IRRegister color = null;
+        int degree = 0;
+        Set<VirtualRegister> suggestSameVRegs = new HashSet<>();
+    }
+
+    private VirtualRegInfo getVregInfo(VirtualRegister vreg){
+        VirtualRegInfo vregInfo = vregInfoMap.get(vreg);
+        if (vregInfo == null) {
+            vregInfo = new VirtualRegInfo();
+            vregInfoMap.put(vreg, vregInfo);
+        }
+        return vregInfo;
+    }
+
     public RegisterAllocator(IRRoot ir){
         this.ir = ir;
         this.physicalRegs = new ArrayList<>(NASMRegisterSet.generalRegs);
@@ -37,31 +61,6 @@ public class RegisterAllocator {
         this.physicalRegs.remove(preg1);
         numColors = this.physicalRegs.size();
     }
-
-    private class VirtualRegInfo{
-        Set<VirtualRegister> neighbours = new HashSet<>();
-        boolean removed = false;
-        IRRegister color = null;
-        int degree = 0;
-        Set<VirtualRegister> suggestSameVRegs = new HashSet<>();
-    }
-
-    private VirtualRegInfo getVregInfo(VirtualRegister vreg){
-        VirtualRegInfo vregInfo = vregInfoMap.get(vreg);
-        if (vregInfo == null) {
-            vregInfo = new VirtualRegInfo();
-            vregInfoMap.put(vreg, vregInfo);
-        }
-        return vregInfo;
-    }
-
-    private Map<VirtualRegister, VirtualRegInfo> vregInfoMap = new HashMap<>();
-    private List<VirtualRegister> vregOrder = new ArrayList<>();
-    private Set<PhysicalRegister> usedColors = new HashSet<>();
-    private Set<VirtualRegister> vregNodes = new HashSet<>();
-    private Set<VirtualRegister> degreeSmallVregNodes = new HashSet<>();
-
-    private  Map<IRRegister, IRRegister> renameMap = new HashMap<>();
 
     private void addEdge(VirtualRegister x, VirtualRegister y){
         getVregInfo(x).neighbours.add(y);
@@ -87,9 +86,7 @@ public class RegisterAllocator {
             vregInfoMap.clear();
             vregNodes.clear();
             degreeSmallVregNodes.clear();
-            for (VirtualRegister argVreg: irFunction.getArgVRegList()) {
-                getVregInfo(argVreg);
-            }
+            for (VirtualRegister argVreg: irFunction.getArgVRegList()) getVregInfo(argVreg);
 
             for (BasicBlock bb : irFunction.getReversePreOrder()){
                 for (IRInstruction inst = bb.getFirstInst(); inst != null; inst = inst.getNextInst()){
@@ -98,7 +95,7 @@ public class RegisterAllocator {
                     VirtualRegInfo vregInfo = getVregInfo((VirtualRegister) definedReg);
                     if (inst instanceof IRMove) {
                         RegValue rhs = ((IRMove) inst).getRhs();
-                        if (rhs instanceof VirtualRegister) {
+                        if (rhs instanceof VirtualRegister && rhs != definedReg) {
                             vregInfo.suggestSameVRegs.add((VirtualRegister) rhs);
                             getVregInfo((VirtualRegister) rhs).suggestSameVRegs.add((VirtualRegister) definedReg);
                         }
@@ -215,7 +212,7 @@ public class RegisterAllocator {
                                         preg = preg0;
                                         usedPreg0 = true;
                                     }
-                                    inst.prependInst((new IRLoad(bb, preg, Configuration.getRegSize(), color, 0)));
+                                    inst.prependInst((new IRLoad(bb, preg, 8, color, 0)));
                                     renameMap.put(reg ,preg);
                                     func.getUsedPhysicalGeneralRegs().add(preg);
                                 } else {
@@ -234,7 +231,7 @@ public class RegisterAllocator {
                     IRRegister color = vregInfoMap.get(definedReg).color;
                     if (color instanceof StackSlot) {
                         inst.setDefinedRegister(preg0);
-                        inst.appendInst(new IRStore(bb, preg0, Configuration.getRegSize(), color, 0));
+                        inst.appendInst(new IRStore(bb, preg0, 8, color, 0));
                         func.getUsedPhysicalGeneralRegs().add(preg0);
                         inst = inst.getNextInst();
                     } else {
@@ -245,6 +242,4 @@ public class RegisterAllocator {
             }
         }
     }
-
-
 }
