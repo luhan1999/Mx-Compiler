@@ -32,13 +32,13 @@ public class FunctionInlineProcessor {
 
         Map<Object, Object> renameMap = new HashMap<>();
         BasicBlock oldEndBB = calleeFunc.getEndBB();
-        BasicBlock newEndBB = new BasicBlock(calleeFunc, oldEndBB.getName());
+        BasicBlock newEndBB = new BasicBlock(callerFunc, oldEndBB.getName());
         renameMap.put(oldEndBB, newEndBB);
         renameMap.put(calleeFunc.getStartBB(), funcCallInst.getParentBB());
         if (callerFunc.getEndBB() == funcCallInst.getParentBB()) callerFunc.setEndBB(newEndBB);
 
         Map<Object, Object> callBBRenameMap = Collections.singletonMap(funcCallInst.getParentBB(), newEndBB);
-        for (IRInstruction inst = funcCallInst.getNextInst(); inst != null; inst.getNextInst()){
+        for (IRInstruction inst = funcCallInst.getNextInst(); inst != null; inst = inst.getNextInst()){
             if (inst instanceof  IRJumpInstruction){
                 newEndBB.setJumpInst(((IRJumpInstruction) inst).copyRename(callBBRenameMap));
             } else {
@@ -166,8 +166,9 @@ public class FunctionInlineProcessor {
                 ir.removeFunc(funcName);
             }
         }
-        for (String funcName : unCalledFunc){
-            ir.removeFunc(funcName);
+
+        for (IRFunction irFunction : ir.getFuncs().values()) {
+            irFunction.updateCalleeSet();
         }
         ir.updateCalleeSet();
 
