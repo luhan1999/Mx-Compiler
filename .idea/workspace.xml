@@ -31,8 +31,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="174">
+              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -96,40 +96,36 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Mx/backend/NASMPrinter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="410" column="53" selection-start-line="410" selection-start-column="53" selection-end-line="410" selection-end-column="53" />
+            <state relative-caret-position="333">
+              <caret line="174" column="43" lean-forward="true" selection-start-line="174" selection-start-column="43" selection-end-line="174" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4056#4057#0" expanded="true" />
-                <element signature="e#11730#11731#0" expanded="true" />
-                <element signature="e#12293#12294#0" expanded="true" />
-                <element signature="e#12393#12394#0" expanded="true" />
+                <element signature="e#11732#11733#0" expanded="true" />
+                <element signature="e#12295#12296#0" expanded="true" />
+                <element signature="e#12395#12396#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Mx/ir/IRBinaryOperation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Mx/ir/IRFunction.java">
+        <entry file="file://$PROJECT_DIR$/src/Mx/ir/IRBinaryOperation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-              <folding>
-                <element signature="e#4924#4925#0" expanded="true" />
-                <element signature="e#4970#4971#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="348">
+              <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Mx/Configuration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="58">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -173,6 +169,7 @@
       <find>getIrRegister</find>
       <find>setDefinedRegister</find>
       <find>IRHeapAlloc</find>
+      <find>rcx1</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -232,9 +229,9 @@
         <option value="$PROJECT_DIR$/src/Mx/backend/RegLivelinessAnalysis.java" />
         <option value="$PROJECT_DIR$/src/Mx/Nasm/NASMRegisterSet.java" />
         <option value="$PROJECT_DIR$/src/Mx/backend/NASMTransformer.java" />
+        <option value="$PROJECT_DIR$/src/Mx/ir/IRBinaryOperation.java" />
         <option value="$PROJECT_DIR$/src/Mx/Main.java" />
         <option value="$PROJECT_DIR$/src/Mx/backend/NASMPrinter.java" />
-        <option value="$PROJECT_DIR$/src/Mx/ir/IRBinaryOperation.java" />
       </list>
     </option>
   </component>
@@ -416,7 +413,7 @@
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/gen-visitor" value="true" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/output-dir" value="F:\LhCompiler\src" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/package" value="Mx.Parser" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557414020718" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557449810220" />
     <property name="last_opened_file_path" value="E:/1_Compiler/fz/EM-Compiler" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -675,13 +672,6 @@
     <entry file="file://$PROJECT_DIR$/src/Mx/Ast/Ast-node-tree">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/Configuration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/ir/VirtualRegister.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
@@ -926,16 +916,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/Nasm/NASMRegisterSet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="20" column="58" lean-forward="true" selection-start-line="20" selection-start-column="58" selection-end-line="20" selection-end-column="58" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/Nasm/NASMRegister.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
@@ -965,16 +945,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/backend/NASMTransformer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1305">
@@ -985,24 +955,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/backend/NASMPrinter.java">
+    <entry file="file://$PROJECT_DIR$/src/Mx/ir/IRBinaryOperation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="410" column="53" selection-start-line="410" selection-start-column="53" selection-end-line="410" selection-end-column="53" />
+        <state relative-caret-position="348">
+          <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mx/Configuration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4056#4057#0" expanded="true" />
-            <element signature="e#11730#11731#0" expanded="true" />
-            <element signature="e#12293#12294#0" expanded="true" />
-            <element signature="e#12393#12394#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/ir/IRBinaryOperation.java">
+    <entry file="file://$PROJECT_DIR$/src/Mx/Nasm/NASMRegisterSet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+        <state relative-caret-position="580">
+          <caret line="20" column="58" lean-forward="true" selection-start-line="20" selection-start-column="58" selection-end-line="20" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mx/backend/NASMPrinter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="174" column="43" lean-forward="true" selection-start-line="174" selection-start-column="43" selection-end-line="174" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4056#4057#0" expanded="true" />
+            <element signature="e#11732#11733#0" expanded="true" />
+            <element signature="e#12295#12296#0" expanded="true" />
+            <element signature="e#12395#12396#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -169,7 +169,7 @@ public class NASMPrinter implements IRVisitor {
             out.println("\t\tmov\t\trdx, " + preg0.getName());
         } else if (node.getOp() == SHL || node.getOp() == SHR){
             out.println("\t\tmov\t\trbx, rcx");
-            out.print("\t\tmov\t\trcx");
+            out.print("\t\tmov\t\trcx, ");
             node.getRhs().accept(this);
             if (node.getOp() == SHL){
                 out.print("\n\t\tsal\t\t");
