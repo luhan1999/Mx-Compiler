@@ -6,6 +6,7 @@ import Mx.ir.*;
 import Mx.Ast.*;
 import Mx.scope.*;
 import Mx.Type.*;
+import org.stringtemplate.v4.compiler.Bytecode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,9 @@ public class IRBuilder extends BaseScopeScanner{
     private boolean isFuncArgDecl = false, wantAddr = false;
     private BasicBlock currentLoopStepBB, currentLoopAfterBB; //for continue or break;
     private String currentClassName = null;
-    private boolean assignLhs = false, uselessStatic = false;
+    private boolean assignLhs = false, uselessStatic = false, isInForStmt = false;
+    private List<String> forVarName = new ArrayList<>();
+    private List<Integer> forVarNum = new ArrayList<>();
 
     public IRRoot getIR() { return ir; }
 
@@ -293,6 +296,13 @@ public class IRBuilder extends BaseScopeScanner{
             }
         }
 
+        if (isInForStmt && node.getCond() instanceof BinaryExprNode && ((BinaryExprNode) node.getCond()).getOp() == BinaryExprNode.BinaryOps.GREATER_EQUAL) {
+            if (((BinaryExprNode) node.getCond()).getLhs() instanceof IdentifierExprNode && ((BinaryExprNode) node.getCond()).getRhs() instanceof IntConstExprNode) {
+                forVarName.add(((IdentifierExprNode) ((BinaryExprNode) node.getCond()).getLhs()).getIdentifier());
+                forVarNum.add(((IntConstExprNode) ((BinaryExprNode) node.getCond()).getRhs()).getValue());
+            }
+        }
+
         currentBB = thenBB;
         node.getThenStmt().accept(this);
         if (!currentBB.isHasJumpInst()) {
@@ -346,6 +356,7 @@ public class IRBuilder extends BaseScopeScanner{
 
     @Override
     public void visit(ForStmtNode node){
+        isInForStmt = true;
         BasicBlock condBB,stepBB,bodyBB,afterBB;
         bodyBB = new BasicBlock(currentFunc, "for_body");
         if (node.getCond() != null)  condBB = new BasicBlock(currentFunc, "for_cond");
@@ -361,7 +372,7 @@ public class IRBuilder extends BaseScopeScanner{
         BasicBlock externalLoopStepBB = currentLoopStepBB, externalLoopAfterBB = currentLoopAfterBB;
         currentLoopStepBB = stepBB;
         currentLoopAfterBB = afterBB;
-
+        BasicBlock tmpBB = currentBB;
         if (node.getInit() != null) node.getInit().accept(this);
         currentBB.setJumpInst(new IRJump(currentBB, condBB));
 
@@ -393,10 +404,30 @@ public class IRBuilder extends BaseScopeScanner{
             }
         }
 
+        IRInstruction inst = tmpBB.getLastInst().getPrevInst();
+        if (node.getInit() instanceof AssignExprNode && node.getCond() instanceof  BinaryExprNode && ((BinaryExprNode) node.getCond()).getOp() == BinaryExprNode.BinaryOps.LESS)
+            if (((BinaryExprNode) node.getCond()).getLhs() instanceof IdentifierExprNode && ((AssignExprNode) node.getInit()).getLhs() instanceof IdentifierExprNode)
+            {
+                IdentifierExprNode cond = (IdentifierExprNode) ((BinaryExprNode) node.getCond()).getLhs();
+                IdentifierExprNode init = (IdentifierExprNode) ((AssignExprNode) node.getInit()).getLhs();
+                if (cond.getIdentifier().equals(init.getIdentifier())){
+                    for (int i = 0; i < forVarName.size(); ++i) {
+                        if (init.getIdentifier().equals(forVarName.get(i)) && inst instanceof IRMove){
+                            ((IRMove) inst).setRhs(new IntImmediate(forVarNum.get(i)));
+                            forVarName.remove(i);
+                            forVarNum.remove(i);
+                            break;
+                        }
+                    }
+                }
+            }
+
+
         currentLoopStepBB = externalLoopStepBB;
         currentLoopAfterBB = externalLoopAfterBB;
 
         currentBB = afterBB;
+        isInForStmt = false;
     }
 
     @Override

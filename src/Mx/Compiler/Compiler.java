@@ -65,7 +65,7 @@ public class Compiler
         IRRoot ir = irBuilder.getIR();
         new FunctionInlineProcessor(ir).run();
         new BinaryOpTransformer(ir).run();
-//        if (irOutS != null) new IRPrinter(irOutS).visit(ir);
+        if (irOutS != null) new IRPrinter(irOutS).visit(ir);
         new StaticDataProcessor(ir).run();
         new RegisterPreprocessor(ir).run();
         new RegLivelinessAnalysis(ir).run();

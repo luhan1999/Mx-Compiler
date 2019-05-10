@@ -13,7 +13,7 @@ public class Main
         String fout = null;
         String irOutFile = null;
         //String nasmoutFile = "F:\\LhCompiler\\src\\Mx\\testcase\\nasm1.txt";
-        String nasmoutFile = null; 
+        String nasmoutFile = null;
 
         InputStream inS;
         PrintStream outS;

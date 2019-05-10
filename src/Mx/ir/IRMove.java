@@ -41,6 +41,8 @@ public class IRMove extends IRInstruction{
         visitor.visit(this);
     }
 
+    public void setRhs(RegValue rhs) { this.rhs = rhs; }
+
     public IRRegister getLhs() {
         return lhs;
     }

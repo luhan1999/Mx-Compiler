@@ -1,0 +1,94 @@
+
+func main {
+%main_entry:
+    jump %__init_func_entry
+
+%__init_func_entry:
+    $ans = move 0
+    $i = move 89999999
+    jump %for_cond
+
+%for_cond:
+    $vreg = slt $i 90000000
+    br $vreg %for_body %for_after
+
+%for_body:
+    $j = move 9
+    jump %for_cond_2
+
+%for_cond_2:
+    $vreg_2 = slt $j 10
+    br $vreg_2 %for_body_2 %for_after_2
+
+%for_after_2:
+    jump %for_step
+
+%for_step:
+    $vreg_3 = move $i
+    $i = add $i 1
+    jump %for_cond
+
+%for_body_2:
+    $vreg_4 = sge $i 89999999
+    br $vreg_4 %if_then %if_after
+
+%if_then:
+    $vreg_5 = sge $j 9
+    br $vreg_5 %if_then_2 %if_after_2
+
+%if_then_2:
+    $vreg_6 = move $i
+    $vreg_6 = mul $vreg_6 8
+    $n = move $vreg_6
+    $res = move 0
+    $i_2 = move 0
+    jump %for_cond_3
+
+%for_cond_3:
+    $vreg_7 = slt $i_2 $n
+    br $vreg_7 %for_body_3 %for_after_3
+
+%for_body_3:
+    $vreg_8 = move $res
+    $vreg_8 = add $vreg_8 $i_2
+    $vreg_9 = move $i_2
+    $vreg_9 = sub $vreg_9 1
+    $vreg_10 = move $n
+    $vreg_10 = and $vreg_10 $vreg_9
+    $vreg_11 = move $vreg_8
+    $vreg_11 = xor $vreg_11 $vreg_10
+    $res = move $vreg_11
+    $vreg_12 = rem $res 10000
+    $res = move $vreg_12
+    jump %for_step_2
+
+%for_step_2:
+    $vreg_13 = move $i_2
+    $vreg_13 = add $vreg_13 1
+    $i_2 = move $vreg_13
+    jump %for_cond_3
+
+%for_after_3:
+    $vreg_14 = move $res
+    $vreg_15 = move $ans
+    $vreg_15 = add $vreg_15 $vreg_14
+    $ans = move $vreg_15
+    jump %if_after_2
+
+%if_after_2:
+    jump %if_after
+
+%if_after:
+    jump %for_step_3
+
+%for_step_3:
+    $vreg_16 = move $j
+    $j = add $j 1
+    jump %for_cond_2
+
+%for_after:
+    call printlnInt $ans 
+    ret 0
+
+}
+
