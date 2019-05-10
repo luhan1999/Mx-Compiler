@@ -46,16 +46,16 @@ main:
 		mov		r11, r9
 		imul	r11, 8
 		add		r11, 8
+		push	rdi
 		push	r10
 		push	r11
 		push	r9
 		mov		rdi, r11
-		push	0
 		call	malloc
-		add		rsp, 8
 		pop		r9
 		pop		r11
 		pop		r10
+		pop		rdi
 		mov		r11, rax
 		mov		r9, qword [rbp+200]
 		mov		qword [r11], r9
@@ -89,32 +89,32 @@ __block___init_func_entry_1:
 		mov		r11, rax
 		mov		r9, r11
 		mov		qword [rbp+104], r9
+		push	rdi
 		push	r10
 		push	r11
 		push	r9
 		mov		rdi, 8
-		push	0
 		call	malloc
-		add		rsp, 8
 		pop		r9
 		pop		r11
 		pop		r10
+		pop		rdi
 		mov		r11, rax
 		mov		qword [r11], 0
 
 __block_splay_tree_entry_1:
 		mov		r9, r11
 		mov		qword [rbp+168], r9
+		push	rdi
 		push	r10
 		push	r11
 		push	r9
 		mov		rdi, 8
-		push	0
 		call	malloc
-		add		rsp, 8
 		pop		r9
 		pop		r11
 		pop		r10
+		pop		rdi
 		mov		r13, rax
 		mov		r11, r13
 		mov		qword [r11], 0
@@ -161,16 +161,16 @@ __block_for_after_1:
 		mov		qword [rbp+96], r9
 		mov		r9, r12
 		mov		qword [rbp+256], r9
+		push	rdi
 		push	r10
 		push	r11
 		push	r9
 		mov		rdi, 96
-		push	0
 		call	malloc
-		add		rsp, 8
 		pop		r9
 		pop		r11
 		pop		r10
+		pop		rdi
 		mov		r12, rax
 		mov		qword [r11], r12
 		mov		r9, qword [rbp+56]
@@ -204,16 +204,16 @@ __block_for_after_1:
 		mov		r12, 2
 		imul	r12, 8
 		add		r12, 8
+		push	rdi
 		push	r10
 		push	r11
 		push	r9
 		mov		rdi, r12
-		push	0
 		call	malloc
-		add		rsp, 8
 		pop		r9
 		pop		r11
 		pop		r10
+		pop		rdi
 		mov		r12, rax
 		mov		qword [r12], 2
 		mov		r9, qword [rbp+192]
@@ -362,16 +362,16 @@ __block_for_after_3:
 		mov		qword [rbp+184], r9
 		mov		r9, qword [rbp+112]
 		mov		r11, r9
+		push	rdi
 		push	r10
 		push	r11
 		push	r9
 		mov		rdi, 96
-		push	0
 		call	malloc
-		add		rsp, 8
 		pop		r9
 		pop		r11
 		pop		r10
+		pop		rdi
 		mov		r12, rax
 		mov		qword [r13], r12
 		mov		r9, qword [rbp+56]
@@ -393,16 +393,16 @@ __block_for_after_3:
 		mov		r14, 2
 		imul	r14, 8
 		add		r14, 8
+		push	rdi
 		push	r10
 		push	r11
 		push	r9
 		mov		rdi, r14
-		push	0
 		call	malloc
-		add		rsp, 8
 		pop		r9
 		pop		r11
 		pop		r10
+		pop		rdi
 		mov		r14, rax
 		mov		qword [r14], 2
 		mov		qword [r12+80], r14
@@ -1742,6 +1742,7 @@ __block_build_entry_1:
 		sar		r13, cl
 		mov		rcx, rbx
 		and		r13, -1
+		push	rdi
 		push	r8
 		push	rdx
 		push	rcx
@@ -1749,13 +1750,16 @@ __block_build_entry_1:
 		push	rsi
 		push	r9
 		mov		rdi, 96
+		push	0
 		call	malloc
+		add		rsp, 8
 		pop		r9
 		pop		rsi
 		pop		r11
 		pop		rcx
 		pop		rdx
 		pop		r8
+		pop		rdi
 		mov		r11, rax
 		mov		r15, r11
 		mov		r11, r13
@@ -1776,6 +1780,7 @@ __block_build_entry_1:
 		mov		r11, 2
 		imul	r11, 8
 		add		r11, 8
+		push	rdi
 		push	r8
 		push	rdx
 		push	rcx
@@ -1783,13 +1788,16 @@ __block_build_entry_1:
 		push	rsi
 		push	r9
 		mov		rdi, r11
+		push	0
 		call	malloc
+		add		rsp, 8
 		pop		r9
 		pop		rsi
 		pop		r11
 		pop		rcx
 		pop		rdx
 		pop		r8
+		pop		rdi
 		mov		r11, rax
 		mov		qword [r11], 2
 		mov		qword [r15+80], r11
@@ -1880,6 +1888,7 @@ __block_if_then_27:
 		mov		r12, 0
 		imul	r12, 8
 		add		r12, r11
+		push	rdi
 		push	r8
 		push	rdx
 		push	rcx
@@ -1887,13 +1896,16 @@ __block_if_then_27:
 		push	rsi
 		push	r9
 		mov		rdi, 96
+		push	0
 		call	malloc
+		add		rsp, 8
 		pop		r9
 		pop		rsi
 		pop		r11
 		pop		rcx
 		pop		rdx
 		pop		r8
+		pop		rdi
 		mov		r11, rax
 		mov		qword [r12+8], r11
 		mov		r12, qword [rsi+80]
@@ -1917,6 +1929,7 @@ __block_if_then_27:
 		mov		r11, 2
 		imul	r11, 8
 		add		r11, 8
+		push	rdi
 		push	r8
 		push	rdx
 		push	rcx
@@ -1924,13 +1937,16 @@ __block_if_then_27:
 		push	rsi
 		push	r9
 		mov		rdi, r11
+		push	0
 		call	malloc
+		add		rsp, 8
 		pop		r9
 		pop		rsi
 		pop		r11
 		pop		rcx
 		pop		rdx
 		pop		r8
+		pop		rdi
 		mov		r11, rax
 		mov		qword [r11], 2
 		mov		qword [r15+80], r11
@@ -1999,6 +2015,7 @@ __block_if_then_28:
 		mov		r12, 1
 		imul	r12, 8
 		add		r12, r11
+		push	rdi
 		push	r8
 		push	rdx
 		push	rcx
@@ -2006,13 +2023,16 @@ __block_if_then_28:
 		push	rsi
 		push	r9
 		mov		rdi, 96
+		push	0
 		call	malloc
+		add		rsp, 8
 		pop		r9
 		pop		rsi
 		pop		r11
 		pop		rcx
 		pop		rdx
 		pop		r8
+		pop		rdi
 		mov		r11, rax
 		mov		qword [r12+8], r11
 		mov		r12, qword [rsi+80]
@@ -2036,6 +2056,7 @@ __block_if_then_28:
 		mov		r11, 2
 		imul	r11, 8
 		add		r11, 8
+		push	rdi
 		push	r8
 		push	rdx
 		push	rcx
@@ -2043,13 +2064,16 @@ __block_if_then_28:
 		push	rsi
 		push	r9
 		mov		rdi, r11
+		push	0
 		call	malloc
+		add		rsp, 8
 		pop		r9
 		pop		rsi
 		pop		r11
 		pop		rcx
 		pop		rdx
 		pop		r8
+		pop		rdi
 		mov		r11, rax
 		mov		qword [r11], 2
 		mov		qword [r15+80], r11

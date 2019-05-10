@@ -179,7 +179,7 @@ public class RegLivelinessAnalysis {
             eliminationChanged = false;
             for (IRFunction irFunction : ir.getFuncs().values()) {
                 if (irFunction.isBuiltIn()) continue;
-                //tryEliminate(irFunction);
+                tryEliminate(irFunction);
                 removeBlankBB(irFunction);
                 livelinessAnalysis(irFunction);
             }

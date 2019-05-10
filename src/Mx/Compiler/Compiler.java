@@ -63,7 +63,7 @@ public class Compiler
         //System.out.println("IRbuild is finished");
 
         IRRoot ir = irBuilder.getIR();
-//        new FunctionInlineProcessor(ir).run();
+        new FunctionInlineProcessor(ir).run();
         new BinaryOpTransformer(ir).run();
 //        if (irOutS != null) new IRPrinter(irOutS).visit(ir);
         new StaticDataProcessor(ir).run();
