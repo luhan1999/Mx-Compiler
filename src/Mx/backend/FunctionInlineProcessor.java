@@ -6,7 +6,7 @@ import Mx.ir.*;
 public class FunctionInlineProcessor {
     private final int MAX_INLINE_INST = 30;
     private final int MAX_LOW_INLINE_INST = 40;
-    private final int MAX_FUNC_INST = 1 << 14;
+    private final int MAX_FUNC_INST = 1 << 12;
     private final int MAX_INLINE_DEPTH = 5;
 
     private IRRoot ir;
@@ -23,6 +23,28 @@ public class FunctionInlineProcessor {
 
     private void copyRegValue(Map<Object, Object> renameMap, RegValue regValue){
         if (!renameMap.containsKey(regValue)) renameMap.put(regValue, regValue.copy());
+    }
+
+    private IRFunction genBakUpFunc(IRFunction func) {
+        IRFunction bakFunc = new IRFunction();
+        Map<Object, Object> bbRenameMap = new HashMap<>();
+        for (BasicBlock bb : func.getReversePostOrder()) {
+            bbRenameMap.put(bb, new BasicBlock(bakFunc, bb.getName()));
+        }
+        for (BasicBlock bb : func.getReversePostOrder()) {
+            BasicBlock bakBB = (BasicBlock) bbRenameMap.get(bb);
+            for (IRInstruction inst = bb.getFirstInst(); inst != null; inst = inst.getNextInst()) {
+                if (inst instanceof IRJumpInstruction) {
+                    bakBB.setJumpInst((IRJumpInstruction) inst.copyRename(bbRenameMap));
+                } else {
+                    bakBB.addInst(inst.copyRename(bbRenameMap));
+                }
+            }
+        }
+        bakFunc.setStartBB((BasicBlock) bbRenameMap.get(func.getStartBB()));
+        bakFunc.setEndBB((BasicBlock) bbRenameMap.get(func.getEndBB()));
+        bakFunc.setArgVRegList(func.getArgVRegList());
+        return bakFunc;
     }
 
     private IRInstruction inlineFunctionCall(IRFunctionCall funcCallInst){
@@ -71,7 +93,7 @@ public class FunctionInlineProcessor {
                 if (forRec.afterBB == oldBB) forRec.afterBB = newBB;
             }
             for (IRInstruction inst = oldBB.getFirstInst(); inst != null; inst = inst.getNextInst()){
-                for (RegValue usedRegValue : inst.getUsedRegisters()){
+                for (RegValue usedRegValue : inst.getUsedRegValues()){
                     copyRegValue(renameMap, usedRegValue);
                 }
                 if (inst.getDefinedRegister() != null) {
@@ -172,6 +194,50 @@ public class FunctionInlineProcessor {
         ir.updateCalleeSet();
 
         //TODO inline recursive functions
+        reversePostOrder = new ArrayList<>();
+        changed = true;
+        for (int i = 0; changed && i < MAX_INLINE_DEPTH; ++i) {
+            changed = false;
+
+            // bak up self recursive functions
+            funcBakUpMap.clear();
+            for (IRFunction irFunction : ir.getFuncs().values()) {
+                FuncInfo funcInfo = funcInfoMap.get(irFunction);
+                if (!funcInfo.recursiveCall) continue;
+                funcBakUpMap.put(irFunction, genBakUpFunc(irFunction));
+            }
+
+            for (IRFunction irFunction : ir.getFuncs().values()) {
+                FuncInfo funcInfo = funcInfoMap.get(irFunction);
+                reversePostOrder.clear();
+                reversePostOrder.addAll(irFunction.getReversePostOrder());
+                thisFuncChanged = false;
+                for (BasicBlock bb : reversePostOrder) {
+                    for (IRInstruction inst = bb.getFirstInst(), nextInst; inst != null; inst = nextInst) {
+                        // inst.getNextInst() may be changed later
+                        nextInst = inst.getNextInst();
+                        if (!(inst instanceof IRFunctionCall)) continue;
+                        FuncInfo calleeInfo = funcInfoMap.get(((IRFunctionCall) inst).getFunc());
+                        if (calleeInfo == null) continue; // skip built-in functions
+                        if (calleeInfo.memFunc) continue;
+                        if (calleeInfo.numInst > MAX_INLINE_INST || calleeInfo.numInst + funcInfo.numInst > MAX_FUNC_INST) continue;
+
+                        nextInst = inlineFunctionCall((IRFunctionCall) inst);
+                        int numAddInst = calleeInfo.numInst;
+                        funcInfo.numInst += numAddInst;
+                        changed = true;
+                        thisFuncChanged = true;
+                    }
+                }
+                if (thisFuncChanged) {
+                    irFunction.calcReversePostOrder();
+                }
+            }
+        }
+        for (IRFunction irFunction : ir.getFuncs().values()) {
+            irFunction.updateCalleeSet();
+        }
+        ir.updateCalleeSet();
     }
 
 

@@ -197,8 +197,8 @@ public class NASMTransformer {
                         }
                     } else if (inst instanceof IRHeapAlloc) {
                         // push caller save registers which would be changed by callee
-                        int numPushCallerSave = 1;
-                        inst.prependInst(new IRPush(inst.getParentBB(), rdi));
+                        int numPushCallerSave = 0;
+                        //inst.prependInst(new IRPush(inst.getParentBB(), rdi));
                         for (PhysicalRegister preg : funcInfo.usedCallerSaveRegs) {
                             ++numPushCallerSave;
                             // could be optimized known which reg would not be changed by malloc
@@ -213,7 +213,7 @@ public class NASMTransformer {
                         // get return value
                         inst.appendInst(new IRMove(inst.getParentBB(), ((IRHeapAlloc) inst).getDest(), rax));
                         // restore caller save registers
-                        inst.appendInst(new IRPop(inst.getParentBB(), rdi));
+                        //inst.appendInst(new IRPop(inst.getParentBB(), rdi));
                         for (PhysicalRegister preg : funcInfo.usedCallerSaveRegs) {
                             // could be optimized known which reg would not be changed by malloc
                             inst.appendInst(new IRPop(inst.getParentBB(), preg));
