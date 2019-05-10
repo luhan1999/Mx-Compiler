@@ -5,9 +5,9 @@ import Mx.ir.*;
 
 public class FunctionInlineProcessor {
     private final int MAX_INLINE_INST = 30;
-    private final int MAX_LOW_INLINE_INST = 40;
+    private final int MAX_LOW_INLINE_INST = 30;
     private final int MAX_FUNC_INST = 1 << 12;
-    private final int MAX_INLINE_DEPTH = 5;
+    private final int MAX_INLINE_DEPTH = 3;
 
     private IRRoot ir;
 
@@ -239,6 +239,4 @@ public class FunctionInlineProcessor {
         }
         ir.updateCalleeSet();
     }
-
-
 }
