@@ -4,8 +4,8 @@ import java.util.*;
 import Mx.ir.*;
 
 public class FunctionInlineProcessor {
-    private final int MAX_INLINE_INST = 20;
-    private final int MAX_LOW_INLINE_INST = 40;
+    private final int MAX_INLINE_INST = 50;
+    private final int MAX_LOW_INLINE_INST = 50;
     private final int MAX_FUNC_INST = 1 << 12;
     private final int MAX_INLINE_DEPTH = 5;
 
@@ -150,8 +150,10 @@ public class FunctionInlineProcessor {
         List<String> unCalledFunc = new ArrayList<>();
         boolean changed = true;
         boolean thisFuncChanged;
+        int t = 0;
         while (changed){
             changed = false;
+            t++; if (t > 3) break;
             unCalledFunc.clear();
             for (IRFunction irFunction : ir.getFuncs().values()) {
                 FuncInfo funcInfo = funcInfoMap.get(irFunction);

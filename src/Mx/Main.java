@@ -9,9 +9,9 @@ public class Main
 {
     public static void main(String arg[])throws Exception
     {
-        String fin = null;
+        String fin = "E:\\1_Compiler\\fz\\EM-Compiler\\testcase\\input.txt";
         String fout = null;
-        String irOutFile = null;
+        String irOutFile = "F:\\LhCompiler\\src\\Mx\\testcase\\ir.txt";
         //String nasmoutFile = "F:\\LhCompiler\\src\\Mx\\testcase\\nasm1.txt";
         String nasmoutFile = null;
 

@@ -4,91 +4,245 @@ func main {
     jump %__init_func_entry
 
 %__init_func_entry:
-    $ans = move 0
-    $i = move 89999999
+    $getInt = call getInt 
+    $n = move $getInt
+    $vreg = move $n
+    $vreg = mul $vreg 8
+    $vreg = add $vreg 8
+    $vreg = alloc $vreg
+    store 8 $vreg $n 0
+    $vreg_2 = move 0
+    $vreg_3 = move $vreg
+    jump %while_cond
+
+%while_cond:
+    $vreg_4 = slt $vreg_2 $n
+    br $vreg_4 %while_body %while_after
+
+%while_after:
+    $vreg_5 = move $vreg
+    $f = move $vreg_5
+    $vreg_6 = move $n
+    $vreg_6 = mul $vreg_6 8
+    $vreg_6 = add $vreg_6 8
+    $vreg_6 = alloc $vreg_6
+    store 8 $vreg_6 $n 0
+    $vreg_7 = move 0
+    $vreg_8 = move $vreg_6
+    jump %while_cond_2
+
+%while_cond_2:
+    $vreg_9 = slt $vreg_7 $n
+    br $vreg_9 %while_body_2 %while_after_2
+
+%while_after_2:
+    $vreg_10 = move $vreg_6
+    $g = move $vreg_10
+    $i = move 0
     jump %for_cond
 
 %for_cond:
-    $vreg = slt $i 90000000
-    br $vreg %for_body %for_after
+    $vreg_11 = slt $i $n
+    br $vreg_11 %for_body %for_after
 
 %for_body:
-    $j = move 9
+    $j = move 0
     jump %for_cond_2
 
 %for_cond_2:
-    $vreg_2 = slt $j 10
-    br $vreg_2 %for_body_2 %for_after_2
+    $vreg_12 = slt $j $n
+    br $vreg_12 %for_body_2 %for_after_2
 
-%for_after_2:
+%for_body_2:
+    $vreg_13 = move $i
+    $vreg_13 = mul $vreg_13 8
+    $vreg_13 = add $vreg_13 $f
+    $vreg_13 = load 8 $vreg_13 8
+    $vreg_14 = move $j
+    $vreg_14 = mul $vreg_14 8
+    $vreg_14 = add $vreg_14 $vreg_13
+    $vreg_15 = move $i
+    $vreg_15 = add $vreg_15 $j
+    store 8 $vreg_14 $vreg_15 8
     jump %for_step
 
 %for_step:
-    $vreg_3 = move $i
-    $i = add $i 1
-    jump %for_cond
-
-%for_body_2:
-    $vreg_4 = sge $i 89999999
-    br $vreg_4 %if_then %if_after
-
-%if_then:
-    $vreg_5 = sge $j 9
-    br $vreg_5 %if_then_2 %if_after_2
-
-%if_then_2:
-    $vreg_6 = move $i
-    $vreg_6 = mul $vreg_6 8
-    $n = move $vreg_6
-    $res = move 0
-    $i_2 = move 0
-    jump %for_cond_3
-
-%for_cond_3:
-    $vreg_7 = slt $i_2 $n
-    br $vreg_7 %for_body_3 %for_after_3
-
-%for_body_3:
-    $vreg_8 = move $res
-    $vreg_8 = add $vreg_8 $i_2
-    $vreg_9 = move $i_2
-    $vreg_9 = sub $vreg_9 1
-    $vreg_10 = move $n
-    $vreg_10 = and $vreg_10 $vreg_9
-    $vreg_11 = move $vreg_8
-    $vreg_11 = xor $vreg_11 $vreg_10
-    $res = move $vreg_11
-    $vreg_12 = rem $res 10000
-    $res = move $vreg_12
-    jump %for_step_2
-
-%for_step_2:
-    $vreg_13 = move $i_2
-    $vreg_13 = add $vreg_13 1
-    $i_2 = move $vreg_13
-    jump %for_cond_3
-
-%for_after_3:
-    $vreg_14 = move $res
-    $vreg_15 = move $ans
-    $vreg_15 = add $vreg_15 $vreg_14
-    $ans = move $vreg_15
-    jump %if_after_2
-
-%if_after_2:
-    jump %if_after
-
-%if_after:
-    jump %for_step_3
-
-%for_step_3:
-    $vreg_16 = move $j
     $j = add $j 1
     jump %for_cond_2
 
+%for_after_2:
+    jump %for_step_2
+
+%for_step_2:
+    $i = add $i 1
+    jump %for_cond
+
 %for_after:
-    call printlnInt $ans 
+    $i = move 0
+    jump %for_cond_3
+
+%for_cond_3:
+    $vreg_16 = slt $i $n
+    br $vreg_16 %for_body_3 %for_after_3
+
+%for_after_3:
+    $sum = move 0
+    $i = move 0
+    jump %for_cond_4
+
+%for_cond_4:
+    $vreg_17 = slt $i $n
+    br $vreg_17 %for_body_4 %for_after_4
+
+%for_after_4:
+    call printInt $sum 
     ret 0
+
+%for_body_4:
+    $j = move 0
+    jump %for_cond_5
+
+%for_cond_5:
+    $vreg_18 = slt $j $n
+    br $vreg_18 %for_body_5 %for_after_5
+
+%for_body_5:
+    $vreg_19 = move $i
+    $vreg_19 = mul $vreg_19 8
+    $vreg_19 = add $vreg_19 $g
+    $vreg_19 = load 8 $vreg_19 8
+    $vreg_20 = move $j
+    $vreg_20 = mul $vreg_20 8
+    $vreg_20 = add $vreg_20 $vreg_19
+    $vreg_20 = load 8 $vreg_20 8
+    $vreg_21 = move $sum
+    $vreg_21 = add $vreg_21 $vreg_20
+    $vreg_22 = move $vreg_21
+    $vreg_22 = and $vreg_22 1073741823
+    $sum = move $vreg_22
+    jump %for_step_3
+
+%for_step_3:
+    $j = add $j 1
+    jump %for_cond_5
+
+%for_after_5:
+    jump %for_step_4
+
+%for_step_4:
+    $i = add $i 1
+    jump %for_cond_4
+
+%for_body_3:
+    $j = move 0
+    jump %for_cond_6
+
+%for_cond_6:
+    $vreg_23 = slt $j $n
+    br $vreg_23 %for_body_6 %for_after_6
+
+%for_body_6:
+    $k = move 0
+    jump %for_cond_7
+
+%for_cond_7:
+    $vreg_24 = slt $k $n
+    br $vreg_24 %for_body_7 %for_after_7
+
+%for_body_7:
+    $vreg_25 = sge $j $i
+    br $vreg_25 %if_then %if_after
+
+%if_then:
+    $vreg_26 = move $i
+    $vreg_26 = mul $vreg_26 8
+    $vreg_26 = add $vreg_26 $g
+    $vreg_26 = load 8 $vreg_26 8
+    $vreg_27 = move $j
+    $vreg_27 = mul $vreg_27 8
+    $vreg_27 = add $vreg_27 $vreg_26
+    $vreg_28 = move $i
+    $vreg_28 = mul $vreg_28 8
+    $vreg_28 = add $vreg_28 $g
+    $vreg_28 = load 8 $vreg_28 8
+    $vreg_29 = move $j
+    $vreg_29 = mul $vreg_29 8
+    $vreg_29 = add $vreg_29 $vreg_28
+    $vreg_29 = load 8 $vreg_29 8
+    $vreg_30 = move $i
+    $vreg_30 = mul $vreg_30 8
+    $vreg_30 = add $vreg_30 $f
+    $vreg_30 = load 8 $vreg_30 8
+    $vreg_31 = move $k
+    $vreg_31 = mul $vreg_31 8
+    $vreg_31 = add $vreg_31 $vreg_30
+    $vreg_31 = load 8 $vreg_31 8
+    $vreg_32 = move $k
+    $vreg_32 = mul $vreg_32 8
+    $vreg_32 = add $vreg_32 $f
+    $vreg_32 = load 8 $vreg_32 8
+    $vreg_33 = move $j
+    $vreg_33 = mul $vreg_33 8
+    $vreg_33 = add $vreg_33 $vreg_32
+    $vreg_33 = load 8 $vreg_33 8
+    $a = move $vreg_29
+    $b = move $vreg_31
+    $c = move $vreg_33
+    $vreg_34 = move $a
+    $vreg_34 = add $vreg_34 $b
+    $vreg_35 = move $vreg_34
+    $vreg_35 = add $vreg_35 $c
+    $vreg_36 = move $vreg_35
+    $vreg_36 = and $vreg_36 1073741823
+    jump %func_entry
+
+%func_entry:
+    $vreg_37 = move $vreg_36
+    store 8 $vreg_27 $vreg_37 8
+    jump %if_after
+
+%if_after:
+    jump %for_step_5
+
+%for_step_5:
+    $k = add $k 1
+    jump %for_cond_7
+
+%for_after_7:
+    jump %for_step_6
+
+%for_step_6:
+    $j = add $j 1
+    jump %for_cond_6
+
+%for_after_6:
+    jump %for_step_7
+
+%for_step_7:
+    $i = add $i 1
+    jump %for_cond_3
+
+%while_body_2:
+    $vreg_8 = add $vreg_8 8
+    $vreg_38 = move $n
+    $vreg_38 = mul $vreg_38 8
+    $vreg_38 = add $vreg_38 8
+    $vreg_38 = alloc $vreg_38
+    store 8 $vreg_38 $n 0
+    store 8 $vreg_8 $vreg_38 0
+    $vreg_7 = add $vreg_7 1
+    jump %while_cond_2
+
+%while_body:
+    $vreg_3 = add $vreg_3 8
+    $vreg_39 = move $n
+    $vreg_39 = mul $vreg_39 8
+    $vreg_39 = add $vreg_39 8
+    $vreg_39 = alloc $vreg_39
+    store 8 $vreg_39 $n 0
+    store 8 $vreg_3 $vreg_39 0
+    $vreg_2 = add $vreg_2 1
+    jump %while_cond
 
 }
 
