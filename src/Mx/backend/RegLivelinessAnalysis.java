@@ -32,8 +32,8 @@ public class RegLivelinessAnalysis {
             changed = true;
             for (BasicBlock bb : reversePreOrder) {
                 for (IRInstruction inst = bb.getLastInst(); inst != null; inst = inst.getPrevInst()) {
-                    liveIn.clear();  // not defined but used after the Inst
-                    liveOut.clear(); // not defined but used after the block
+                    liveIn.clear();  // not defined but used in the Inst
+                    liveOut.clear(); // not defined but used after the Inst
                     if (inst instanceof IRJumpInstruction) {
                         if (inst instanceof IRJump) {
                             liveOut.addAll(((IRJump) inst).getTargetBB().getFirstInst().liveIn);
@@ -101,7 +101,7 @@ public class RegLivelinessAnalysis {
                         continue;
                     }
                     if (inst.getDefinedRegister() != null) {
-                        if (afterFirstInst.liveIn.contains(inst.getDefinedRegister())) {
+                        if  (afterFirstInst.liveIn != null && afterFirstInst.liveIn.contains(inst.getDefinedRegister())) {
                             isFieldOutside = true;
                         }
                         continue;
@@ -179,7 +179,7 @@ public class RegLivelinessAnalysis {
             eliminationChanged = false;
             for (IRFunction irFunction : ir.getFuncs().values()) {
                 if (irFunction.isBuiltIn()) continue;
-                //tryEliminate(irFunction);
+                tryEliminate(irFunction);
                 removeBlankBB(irFunction);
                 livelinessAnalysis(irFunction);
             }
