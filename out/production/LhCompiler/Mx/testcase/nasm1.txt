@@ -1331,7 +1331,7 @@ __block_if_then_2:
 __block_if_after_2:
 		mov		r10, rsi
 		mov		rbx, rcx
-		mov		rcx1
+		mov		rcx, 1
 		sar		r10, cl
 		mov		rcx, rbx
 		and		r10, -1
