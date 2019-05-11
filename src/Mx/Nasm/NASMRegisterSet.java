@@ -22,7 +22,7 @@ public class NASMRegisterSet {
         List<NASMRegister> calleeSave = new ArrayList<>();
 
         rax = new NASMRegister("rax", false, true, false, -1);
-        rcx = new NASMRegister("rcx", false, true, false, 3);
+        rcx = new NASMRegister("rcx", true, true, false, 3);
         rdx = new NASMRegister("rdx", false, true, false, 2);
         rbx = new NASMRegister("rbx", false, false, true, -1);
         rsi = new NASMRegister("rsi", false, true, false, 1);
