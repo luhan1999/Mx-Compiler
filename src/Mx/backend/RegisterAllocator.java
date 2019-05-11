@@ -66,6 +66,31 @@ public class RegisterAllocator {
         numColors = this.physicalRegs.size();
     }
 
+    void calcRegsiters(IRFunction irFunction){
+        this.physicalRegs = new ArrayList<>(NASMRegisterSet.generalRegs);
+
+        if (irFunction.getArgVRegList().size() >= 1) physicalRegs.remove(rdi);
+        if (irFunction.getArgVRegList().size() >= 2) physicalRegs.remove(rsi);
+        if (irFunction.getArgVRegList().size() >= 3) physicalRegs.remove(rdx);
+        if (irFunction.getArgVRegList().size() >= 4) physicalRegs.remove(rcx);
+        if (irFunction.getArgVRegList().size() >= 5) physicalRegs.remove(r8);
+        if (irFunction.getArgVRegList().size() >= 6) physicalRegs.remove(r9);
+
+        if (ir.isHasDivShiftInst()) {
+            preg0 = physicalRegs.get(0);
+            preg1 = physicalRegs.get(1);
+        } else {
+            preg0 = rbx;
+            preg1 = physicalRegs.get(0);
+        }
+
+        ir.setPreg0(preg0);
+        ir.setPreg1(preg1);
+        this.physicalRegs.remove(preg0);
+        this.physicalRegs.remove(preg1);
+        numColors = this.physicalRegs.size();
+    }
+
     private void addEdge(VirtualRegister x, VirtualRegister y){
         getVregInfo(x).neighbours.add(y);
         getVregInfo(y).neighbours.add(x);
@@ -87,6 +112,7 @@ public class RegisterAllocator {
 
     public void run(){
         for (IRFunction irFunction : ir.getFuncs().values()){
+            calcRegsiters(irFunction);
             vregInfoMap.clear();
             vregNodes.clear();
             degreeSmallVregNodes.clear();
