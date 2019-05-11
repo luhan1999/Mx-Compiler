@@ -21,12 +21,12 @@ public class NASMRegisterSet {
         List<NASMRegister> callerSave = new ArrayList<>();
         List<NASMRegister> calleeSave = new ArrayList<>();
 
-        rax = new NASMRegister("rax", false, true, false, -1);
+        rax = new NASMRegister("rax", true, true, false, -1);
         rcx = new NASMRegister("rcx", true, true, false, 3);
-        rdx = new NASMRegister("rdx", false, true, false, 2);
-        rbx = new NASMRegister("rbx", false, false, true, -1);
-        rsi = new NASMRegister("rsi", false, true, false, 1);
-        rdi = new NASMRegister("rdi", false, true, false, 0);
+        rdx = new NASMRegister("rdx", true, true, false, 2);
+        rbx = new NASMRegister("rbx", true, false, true, -1);
+        rsi = new NASMRegister("rsi", true, true, false, 1);
+        rdi = new NASMRegister("rdi", true, true, false, 0);
         rsp = new NASMRegister("rsp", false, true, false, -1);
         rbp = new NASMRegister("rbp", false, false, true, -1);
         r8 = new NASMRegister("r8", true, true, false, 4);
