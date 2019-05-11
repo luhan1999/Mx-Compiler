@@ -46,6 +46,10 @@ public class RegisterAllocator {
             if (func.getArgVRegList().size() > ir.getMaxNumFuncArgs())
                 ir.setMaxNumFuncArgs(func.getArgVRegList().size());
         }
+        if (ir.getMaxNumFuncArgs() >= 1) physicalRegs.remove(rdi);
+        if (ir.getMaxNumFuncArgs() >= 2) physicalRegs.remove(rsi);
+        if (ir.getMaxNumFuncArgs() >= 3) physicalRegs.remove(rdx);
+        if (ir.getMaxNumFuncArgs() >= 4) physicalRegs.remove(rcx);
         if (ir.getMaxNumFuncArgs() >= 5) physicalRegs.remove(r8);
         if (ir.getMaxNumFuncArgs() >= 6) physicalRegs.remove(r9);
         if (ir.isHasDivShiftInst()) {
