@@ -1004,7 +1004,7 @@ public class IRBuilder extends BaseScopeScanner{
                 throw new CompilerError("invalid int arithmetic binary operation");
         }
 
-        if (op == IRBinaryOperation.IRBinaryOp.MOD && rhs instanceof IntImmediate){
+        if (op == IRBinaryOperation.IRBinaryOp.MOD && rhs instanceof IntImmediate && rhsImm > 10){
             long val = Long.parseLong(rhsImm + "");
             int cnt = 0;
             while (val % 2 == 0) {
