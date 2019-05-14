@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Mx/frontend/IRBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
-              <caret line="1003" column="83" lean-forward="true" selection-start-line="1003" selection-start-column="83" selection-end-line="1003" selection-end-column="83" />
+            <state relative-caret-position="493">
+              <caret line="1024" column="13" lean-forward="true" selection-start-line="1024" selection-start-column="13" selection-end-line="1024" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#18629#18630#0" expanded="true" />
@@ -120,11 +120,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Mx/backend/FunctionInlineProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
-              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+            <state relative-caret-position="174">
+              <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -229,10 +232,10 @@
         <option value="$PROJECT_DIR$/src/Mx/Compiler/Compiler.java" />
         <option value="$PROJECT_DIR$/src/Mx/ir/IRMove.java" />
         <option value="$PROJECT_DIR$/src/Mx/Main.java" />
-        <option value="$PROJECT_DIR$/src/Mx/backend/FunctionInlineProcessor.java" />
         <option value="$PROJECT_DIR$/src/Mx/Nasm/NASMRegisterSet.java" />
         <option value="$PROJECT_DIR$/src/Mx/backend/RegisterAllocator.java" />
         <option value="$PROJECT_DIR$/src/Mx/frontend/IRBuilder.java" />
+        <option value="$PROJECT_DIR$/src/Mx/backend/FunctionInlineProcessor.java" />
       </list>
     </option>
   </component>
@@ -414,7 +417,7 @@
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/gen-visitor" value="true" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/output-dir" value="F:\LhCompiler\src" />
     <property name="$PROJECT_DIR$/src/Mx/Parser/Mx.g4::/package" value="Mx.Parser" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557793657350" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557794360976" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -952,13 +955,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mx/backend/FunctionInlineProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -971,8 +967,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Mx/frontend/IRBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="1003" column="83" lean-forward="true" selection-start-line="1003" selection-start-column="83" selection-end-line="1003" selection-end-column="83" />
+        <state relative-caret-position="493">
+          <caret line="1024" column="13" lean-forward="true" selection-start-line="1024" selection-start-column="13" selection-end-line="1024" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#18629#18630#0" expanded="true" />
@@ -981,6 +977,16 @@
             <element signature="e#18847#18848#0" expanded="true" />
             <element signature="e#51253#51254#0" expanded="true" />
             <element signature="e#51320#51321#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mx/backend/FunctionInlineProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -7,7 +7,7 @@ public class FunctionInlineProcessor {
     private final int MAX_INLINE_INST = 30;
     private final int MAX_LOW_INLINE_INST = 40;
     private final int MAX_FUNC_INST = 1 << 12;
-    private final int MAX_INLINE_DEPTH = 3;
+    private final int MAX_INLINE_DEPTH = 4;
 
     private IRRoot ir;
 
