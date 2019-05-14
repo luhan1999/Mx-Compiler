@@ -1004,6 +1004,27 @@ public class IRBuilder extends BaseScopeScanner{
                 throw new CompilerError("invalid int arithmetic binary operation");
         }
 
+        if (op == IRBinaryOperation.IRBinaryOp.MOD && rhs instanceof IntImmediate){
+            long val = Long.parseLong(rhsImm + "");
+            int cnt = 0;
+            while (val % 2 == 0) {
+                cnt++;
+                val /= 2;
+            }
+            if (val != 1){
+                VirtualRegister vreg = new VirtualRegister(null);
+                long mo = 1L << 32;
+                int x = Integer.parseInt(String.valueOf((mo - 1) / val + 1));
+                currentBB.addInst(new IRBinaryOperation(currentBB, vreg, IRBinaryOperation.IRBinaryOp.SHR, lhs, new IntImmediate(cnt)));
+                currentBB.addInst(new IRBinaryOperation(currentBB, vreg, IRBinaryOperation.IRBinaryOp.MUL, vreg, new IntImmediate(x)));
+                currentBB.addInst(new IRBinaryOperation(currentBB, vreg, IRBinaryOperation.IRBinaryOp.SHR, vreg, new IntImmediate(32)));
+                currentBB.addInst(new IRBinaryOperation(currentBB, vreg, IRBinaryOperation.IRBinaryOp.MUL, vreg, rhs));
+                currentBB.addInst(new IRBinaryOperation(currentBB, vreg, IRBinaryOperation.IRBinaryOp.SUB, lhs, vreg));
+                node.setRegValue(vreg);
+                return;
+            }
+        }
+
         VirtualRegister vreg = new VirtualRegister(null);
         node.setRegValue(vreg);
         currentBB.addInst(new IRBinaryOperation(currentBB, vreg, op, lhs, rhs));

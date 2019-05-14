@@ -13,28 +13,6 @@ main:
 		mov		rbp, rsp
 
 __block___init_func_entry_1:
-		mov		r9, 2
-		imul	r9, 8
-		add		r9, 8
-		push	rdi
-		push	r9
-		push	r10
-		mov		rdi, r9
-		push	0
-		call	malloc
-		add		rsp, 8
-		pop		r10
-		pop		r9
-		pop		rdi
-		mov		r9, rax
-		mov		qword [r9], 2
-		mov		r10, r9
-		mov		r9, 1
-		imul	r9, 8
-		add		r9, r10
-		mov		qword [r9+8], 0
-
-__block_a_entry_1:
 		mov		rax, 0
 		add		rsp, 8
 		pop		rbp
